@@ -1,0 +1,12 @@
+<nav>
+	<button id="view_orders">orders</button>
+	<button id="view_menu">menu</button>
+<% if(!logged_in) { %>
+	<button>login</button>
+<% } else { %>
+	<div>
+		<span id="username"></span>
+		<button id="logout"></button>
+	</div>
+<% } %>
+</nav>
