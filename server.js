@@ -18,9 +18,6 @@ const knexLogger  = require('knex-logger');
 
 const DataAccess = require('./lib/data-access.js')(knex);
 
-
-
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -57,16 +54,36 @@ app.get("/", (req, res) => {
 });
 
 app.get("/menu", (req, res) => {
-  // console.log("in handler");
   DataAccess.applyToMenu((menu) => {
     res.json(menu);
   });
 });
 
 app.get("/home", (req, res) => {
-  res.render("menu", { 
-    logged_in: registrationRoutes.verify(req.session.username)
+  res.render("home", { 
+    logged_in: registrationRoutes.verify(req.session.username),
+    cart: req.session.cart,
   });
+});
+
+app.post("/cart/:id", (req, res) => {
+  if(!req.session.cart) {
+    req.session.cart = `{
+      "${req.params.id}": {
+        json: "${req.body.json}" 
+        qty: "${req.body.qty}"
+      }
+    }`;
+  }
+  else {
+    let cart = JSON.parse(req.session.cart);
+    cart[req.params.id] = {
+      json: req.body.json,
+      qty: req.body.qty
+    };
+    req.session.cart = JSON.stringify(cart);
+  }
+  res.json(req.session.cart);
 });
 
 app.listen(PORT, () => {
