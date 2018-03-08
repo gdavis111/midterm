@@ -14,7 +14,6 @@ exports.seed = function(knex, Promise) {
     })
     .then(function () {
       return Promise.all([
-        // Inserts seed entries
         knex('products').insert({id: 1, name: 'Turkey Club', price: '16.0', category_id: '1'}),
         knex('products').insert({id: 2, name: 'BLT', price: '12.0', category_id: '1'}),
         knex('products').insert({id: 3, name: 'Sprite', price: '3.0', category_id: '2'}),
