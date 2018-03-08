@@ -1,19 +1,34 @@
 /*jslint node: true */
 "use strict";
 
+const bcrypt  = require('bcrypt');
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (knex) => {
+module.exports = (DataAccess) => {
 
-  router.get("/", (req, res) => {
-    knex
-      .select("*")
-      .from("users")
-      .then((results) => {
-        res.json(results);
-    });
+
+  // TODO add dataAccess calls to /login and /logout handlers
+
+  router.put("/register", (req, res) => {
+
   });
 
-  return router;
+  router.put("/login", (req, res) => {
+    console.log(req.body);
+    res.send(req.body.username);
+  });
+
+  router.put("/logout", (req, res) => {
+    console.log(req.session.username);
+    res.send();
+  });
+
+  return {
+    verify: (username) => {
+      return false;
+    },
+    routes: router
+  };
 };
+

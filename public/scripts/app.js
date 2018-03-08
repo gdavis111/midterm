@@ -1,3 +1,5 @@
+// TODO deal with double-clicking on items being added to cart
+
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
   let $category          = $(`<div class="${current_category}"></div>`);
@@ -27,13 +29,7 @@ const renderMenu = (menu) => {
 
 const renderCart = (cart) => {
   const $cart = $('#cart');
-  $cart.empty();
-  $cart.append('<h3>Your Cart:</h3>');
-
-  if($.isEmptyObject(cart)) {
-    $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');
-  }
-  else {
+  const printHTML = (cart) => {
     let total = 0;
     for(let product_id in cart) {
       let qty          = cart[product_id].qty;
@@ -57,12 +53,41 @@ const renderCart = (cart) => {
 
     $('.cart_item').on('click', removeThisFromCart);
     $('#order').on('click', placeOrder);
+  };
 
+  $cart.empty();
+  $cart.append('<h3>Your Cart:</h3>');
+
+  if($.isEmptyObject(cart)) {
+    const returning_cart = $cart.data('json');
+    if(!$.isEmptyObject(returning_cart)) {
+      printHTML(returning_cart);
+    }
+    else {
+      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');      
+    }
+  }
+  else {
+    printHTML(cart);
   }
 };
 
 function placeOrder() {
-  // TODO write this function. Talk to Greg about Twilio
+  if(!$('nav').data('logged_in')) {
+    displayLoginFormAsync()
+    .then((user_logged_in) => {
+      if(user_logged_in) {
+        alert('now we will place your order');
+      }
+    })
+    .catch((message) => {
+      alert(message);
+    });
+  }
+  else {
+    // TODO write this function. Talk to Greg about Twilio
+    alert('This is where we do the twilio call and access the database to create an order row in the orders table');
+  }
 }
 
 function removeThisFromCart() {
@@ -132,8 +157,158 @@ function displayQuantityForm() {
 
 }
 
-function displayLoginForm() {
+function reflectLoginStatus() {
+  const logged_in = $('nav').data('logged_in');
 
+  if(logged_in) {
+    $('#login_button').hide();
+    $('nav').find('#logout_button').closest('div').show();
+
+    $('#logout_button').on('click', function() {
+      $.ajax({
+        method: "PUT",
+        url: "/users/logout"
+      })
+      .done(() => window.location.replace("/"));
+    });
+  }
+
+  else {
+    $('#login_button').show();
+    $('nav').find('#logout_button').closest('div').hide();
+
+    $('#login_button').on('click', function(event) {
+      event.stopImmediatePropagation();
+      displayLoginFormAsync()
+        .then((user_logged_in) => {
+          if(user_logged_in) {
+            reflectLoginStatus();
+          }
+        })
+        .catch((message) => {
+          // TODO you can do better than alert...
+          alert(message);
+        });
+
+    });
+    $('#view_orders').on('click', function(event) {
+      displayLoginFormAsync()
+        .then((user_logged_in) => {
+          if(user_logged_in) {
+            window.location.replace("/orders");
+          }
+        })
+        .catch((message) => {
+          alert(message);
+        });
+    });
+
+  }
+}
+
+function displayRegistrationForm() {
+  return new Promise(function(resolve, reject) {
+
+    // TODO write appropriate resolutions and rejections for this guy
+
+    const $register_section    = $('#register');
+    const $form                = $register_section.find('form');
+    const exit                 = () => {
+      $form.off('submit');
+      $register_section.off('click');
+      $(document).off('click');
+      $register_section.fadeOut();
+    };
+
+    $form.on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        method: "PUT",
+        url: "/users/register",
+        data: $form.serialize()
+      })
+      .done((username) => {
+        exit();
+
+        $('#username')
+        .data('username', username)
+        .text(username);
+
+        $('nav').data('logged_in', true);
+        resolve(true);
+      })
+      .fail((message) => {
+        exit();
+        reject(message);
+      });
+    });
+
+    $register_section.on('click', (event) => {
+      event.stopPropagation();
+    });
+
+    $(document).on('click', function() {
+      resolve(false);
+      exit();
+    }); 
+
+    $register_section.fadeIn();
+
+  });
+}
+
+function displayLoginFormAsync() {
+  return new Promise(function(resolve, reject) {
+    const $login_section       = $('#login');
+    const $form                = $login_section.find('form');
+    const $registration_link   = $login_section.find('#new');
+    const exit                 = () => {
+      $registration_link.off('click');
+      $form.off('submit');
+      $login_section.off('click');
+      $(document).off('click');
+      $login_section.fadeOut();
+    };
+
+    $registration_link.on('click', function() {
+      exit();
+      displayRegistrationForm();
+    });
+
+    $form.on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        method: "PUT",
+        url: "/users/login",
+        data: $form.serialize()
+      })
+      .done((username) => {
+        exit();
+
+        $('#username')
+        .data('username', username)
+        .text(username);
+
+        $('nav').data('logged_in', true);
+        resolve(true);
+      })
+      .fail((message) => {
+        exit();
+        reject(message);
+      });
+    });
+
+    $login_section.on('click', (event) => {
+      event.stopPropagation();
+    });
+
+    $(document).on('click', function() {
+      resolve(false);
+      exit();
+    }); 
+
+    $login_section.fadeIn();
+  });
 }
 
 $(() => {
@@ -144,6 +319,7 @@ $(() => {
   })
   .done((menu) => {
     renderMenu(menu);
+<<<<<<< HEAD
 
     // TODO figure out a smart way to pass external data to this
     // script. i.e renderCart below ought to be able to display the
@@ -151,8 +327,10 @@ $(() => {
     // or not a user is already logged in! Probably the way to
     // do this is with data attributes.
 
+=======
+>>>>>>> daf120830121cb048b3f701d950286b19a57290b
     renderCart();
-    $('#login_button').on('click', displayLoginForm);
+    reflectLoginStatus();
   });
 
 });
