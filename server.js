@@ -47,7 +47,8 @@ app.use(express.static("public"));
 
 
 // Seperated Routes for each Resource
-const registrationRoutes = require("./routes/registration.js")(DataAccess);
+const userMiddle = require("./routes/users.js")(DataAccess);
+app.use("/users", userMiddle.routes);
 
 app.get("/", (req, res) => {
   res.render("title");
@@ -61,9 +62,13 @@ app.get("/menu", (req, res) => {
 
 app.get("/home", (req, res) => {
   res.render("home", { 
-    logged_in: registrationRoutes.verify(req.session.username),
-    cart: req.session.cart,
+    logged_in: userMiddle.verify(req.session.username),
+    cart: req.session.cart
   });
+});
+
+app.get("/orders", (req, res) => {
+  res.send('This will be the orders page.');
 });
 
 app.post("/cart/:id", (req, res) => {

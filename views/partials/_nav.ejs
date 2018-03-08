@@ -1,12 +1,9 @@
-<nav>
+<nav data="<%=logged_in%>">
 	<button id="view_orders">orders</button>
 	<button id="view_menu">menu</button>
-<% if(!logged_in) { %>
 	<button id="login_button">login</button>
-<% } else { %>
 	<div>
 		<span id="username"></span>
-		<button id="logout_button"></button>
+		<button id="logout_button">logout</button>
 	</div>
-<% } %>
 </nav>
