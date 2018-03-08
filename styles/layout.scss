@@ -5,10 +5,164 @@ body {
     color: #244751;
   }
 }
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  color: #244751;
+  background-color: #eee;
+}
+* {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+main {
+  width: 450px;
+  margin: 0 auto;
+  background-color: white;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
 
 #login,
 #register,
 #specify_quantity {
 	display: none;
 }
+
+nav {
+  float: right;
+  width: 20%;
+  position: fixed;
+  right: 1%;
+  padding: 1% 1% 1% 1%;
+}
+
+section.cart-login-register {
+  width: 450px;
+  margin: 0 auto;
+  background-color: white;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+button#view_orders {
+
+}
+
+button#view_menu {
+
+}
+
+button#login_button {
+
+}
+
+main {
+
+}
+
+section#menu {
+
+}
+
+div.sandwich {
+
+}
+
+div.product {
+  border: 1px solid black;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 175%
+
+}
+
+div.product span {
+
+}
+
+div.product small {
+  float: right;
+}
+
+div.drink {
+
+}
+
+div.drink {
+
+}
+
+article#cart {
+  margin: 10px;
+  font-size: 15px;
+}
+
+article#cart h3 {
+  font-size: 38px;
+}
+
+article#specify_quantity span {
+  font-size: 15px;
+  margin-right: 2%;
+}
+
+article#specify_quantity .plus {
+  font-size: 20px;
+  margin-right: 2%;
+
+}
+
+article#specify_quantity .minus {
+  font-size: 20px;
+  margin-right: 2%;
+
+}
+
+article#specify_quantity .add {
+  font-size: 20px;
+  margin-right: 2%;
+
+}
+
+article#specify_quantity .cancel {
+  font-size: 20px;
+  margin-right: 2%;
+
+}
+
+div.cart_item {
+
+}
+
+div.cart_item small {
+
+}
+
+div.cart_item span {
+
+}
+
+span.total {
+
+}
+
+button#order {
+
+}
+
+
+
+
+
+
+
+
 

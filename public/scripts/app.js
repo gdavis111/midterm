@@ -145,7 +145,7 @@ $(() => {
   .done((menu) => {
     renderMenu(menu);
 
-    // TODO figure out a smart way to pass external data to this 
+    // TODO figure out a smart way to pass external data to this
     // script. i.e renderCart below ought to be able to display the
     // cart of a user who's returning to the page. And we need to know whether
     // or not a user is already logged in! Probably the way to
