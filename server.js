@@ -1,3 +1,4 @@
+/*jslint node: true */
 "use strict";
 
 require('dotenv').config();
@@ -6,6 +7,7 @@ const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
+const cookieSession = require("cookie-session");
 const sass        = require("node-sass-middleware");
 const app         = express();
 
@@ -14,8 +16,10 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-// Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
+const DataAccess = require('./lib/data-access.js')(knex);
+
+
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -27,6 +31,10 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  secret: 'Listen... doo wah oooh... Do you want to know a secret?.. doo wah oooh'
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -35,14 +43,32 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
 
-// Home page
+// *--------*
+// | ROUTES |
+// *--------*
+
+
+// Seperated Routes for each Resource
+const registrationRoutes = require("./routes/registration.js")(DataAccess);
+
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("title");
+});
+
+app.get("/menu", (req, res) => {
+  // console.log("in handler");
+  DataAccess.applyToMenu((menu) => {
+    res.json(menu);
+  });
+});
+
+app.get("/home", (req, res) => {
+  res.render("menu", { 
+    logged_in: registrationRoutes.verify(req.session.username)
+  });
 });
 
 app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+  console.log("Excellent food ordering app listening on port " + PORT);
 });

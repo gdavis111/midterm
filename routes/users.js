@@ -1,3 +1,4 @@
+/*jslint node: true */
 "use strict";
 
 const express = require('express');
@@ -15,4 +16,4 @@ module.exports = (knex) => {
   });
 
   return router;
-}
+};
