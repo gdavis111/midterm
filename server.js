@@ -48,7 +48,14 @@ app.use(express.static("public"));
 
 // Seperated Routes for each Resource
 const userMiddle = require("./routes/users.js")(DataAccess);
+const twilioMiddle = require("./routes/users.js");
 app.use("/users", userMiddle.routes);
+app.use("/twilio", twilioMiddle.routes);
+
+// *--------*
+// | TWILIO |
+// *--------*
+
 
 app.get("/", (req, res) => {
   res.render("title");
