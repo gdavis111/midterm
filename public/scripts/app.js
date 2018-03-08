@@ -61,10 +61,14 @@ const renderCart = (cart) => {
   }
 };
 
+function placeOrder() {
+
+}
+
 function removeThisFromCart() {
-  $.ajax({
-    // TODO
-  });
+  // TODO complete this function
+  $this = $(this);
+  debugger;
 }
 
 function addToCart(product_json, qty) {
