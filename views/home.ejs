@@ -22,16 +22,30 @@
     <article id="cart">
     </article>
 
-    <section id="login">
-    </section>
+    <article id="login">
+      <form action="/login" method="POST">
+        <span>username: </span><input type="text" name="username">
+        <span>password: </span><input type="password" name="password">
+        <input type="submit" value="login">
+      </form>
+    </article>
 
-    <section id="specify_quantity">
+    <article id="register">
+      <form action="/register" method="POST">
+        <span>username: </span><input type="text" name="username">
+        <span>password: </span><input type="password" name="password">
+        <span>phone number: </span><input type="text" name="phone_number">
+        <input type="submit" value="register">
+      </form>
+    </article>
+
+    <article id="specify_quantity">
       <span></span>
       <button class="plus">+</button>
       <button class="minus">-</button>
       <button class="add">Add To Cart</button>
       <button class="cancel">Cancel</button>
-    </section>  
+    </article>  
 
   </body>
 </html>

@@ -21,7 +21,7 @@ const renderMenu = (menu) => {
   }
 
   $menu.append($category);
-  $('.product').on('click', specifyQuantity);
+  $('.product').on('click', displayQuantityForm);
 
 };
 
@@ -42,7 +42,7 @@ const renderCart = (cart) => {
       total += price_sum;
 
       let $product = $(`
-        <div class="cart_item">
+        <div class="cart_item" data-id="${product_id}">
           <small>${qty}</small>
           <span>${product.name}</span>
           <small>$${price_sum}</small>
@@ -62,13 +62,17 @@ const renderCart = (cart) => {
 };
 
 function placeOrder() {
-
+  // TODO write this function. Talk to Greg about Twilio
 }
 
 function removeThisFromCart() {
-  // TODO complete this function
-  $this = $(this);
-  debugger;
+  $.ajax({
+    method: "DELETE",
+    url: `/cart/${$(this).data('id')}`,
+  })
+  .done((cart) => {
+    renderCart(JSON.parse(cart));
+  });
 }
 
 function addToCart(product_json, qty) {
@@ -85,7 +89,7 @@ function addToCart(product_json, qty) {
   });
 }
 
-function specifyQuantity() {
+function displayQuantityForm() {
   const $quantity_form   = $('#specify_quantity');
   const $qty             = $quantity_form.find('span');
   const $plus            = $quantity_form.find('.plus');
@@ -128,6 +132,10 @@ function specifyQuantity() {
 
 }
 
+function displayLoginForm() {
+
+}
+
 $(() => {
 
   $.ajax({
@@ -136,7 +144,15 @@ $(() => {
   })
   .done((menu) => {
     renderMenu(menu);
+
+    // TODO figure out a smart way to pass external data to this 
+    // script. i.e renderCart below ought to be able to display the
+    // cart of a user who's returning to the page. And we need to know whether
+    // or not a user is already logged in! Probably the way to
+    // do this is with data attributes.
+
     renderCart();
+    $('#login_button').on('click', displayLoginForm);
   });
 
 });

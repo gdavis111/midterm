@@ -74,12 +74,26 @@ app.post("/cart/:id", (req, res) => {
   else {
     cart = JSON.parse(req.session.cart); 
   }
-  
+
   cart[req.params.id] = {
     json: req.body.json,
     qty: req.body.qty
   };
 
+  req.session.cart = JSON.stringify(cart);
+  res.json(req.session.cart);
+});
+
+app.delete("/cart/:id", (req, res) => {
+  let cart;
+  if(!req.session.cart) {
+    cart = {};
+  }
+  else {
+    cart = JSON.parse(req.session.cart);
+  }
+
+  delete cart[req.params.id];
   req.session.cart = JSON.stringify(cart);
   res.json(req.session.cart);
 });
