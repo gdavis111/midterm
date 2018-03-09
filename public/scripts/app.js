@@ -1,5 +1,4 @@
 // TODO deal with double-clicking on items being added to cart. This makes the quantity specifier mulitiply
-// TODO username disappears on refresh
 //
 
 // *-----------------------*
@@ -140,13 +139,18 @@ function displayQuantityForm() {
   const $cancel          = $quantity_form.find('.cancel');
   const product_json     = $(this).data('product_json');
   const name             = JSON.parse(product_json).name;
-  const exit             = () => {
+  const clear            = () => {
     $plus.off('click');
     $minus.off('click');
     $add.off('click');
     $cancel.off('click');
+  };
+  const exit             = () => {
+    clear();
     $quantity_form.fadeOut();
   };
+
+  clear();
 
   $name.text(name);
   $qty.text(1);
