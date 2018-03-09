@@ -57,6 +57,8 @@ const renderCart = (cart) => {
 
     const $order = $('#order');
 
+    // debugger;
+
     $('.cart_item').on('click', removeThisFromCart);
     $('#order').on('click', placeOrder);
   };
@@ -78,8 +80,7 @@ const renderCart = (cart) => {
   }
 };
 
-function placeOrder(event) {
-  event.stopImmediatePropagation();
+function placeOrder() {
   if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
@@ -199,7 +200,6 @@ function reflectLoginStatus() {
 
     });
     $('#view_orders').on('click', function(event) {
-
       event.stopImmediatePropagation();
       displayLoginFormAsync()
         .then((user_logged_in) => {
@@ -313,9 +313,6 @@ function displayLoginFormAsync() {
     });
 
     $(document).on('click', function() {
-
-      console.log('document clicked');
-
       resolve(false);
       exit();
     }); 

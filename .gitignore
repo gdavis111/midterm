@@ -3,3 +3,8 @@ public/styles
 .env
 *.log
 *.sqlite3
+.DS_Store
+public/.DS_Store
+styles/.DS_Store
+styles/restaurant_table-wallpaper-1920x1200.jpg
+views/.DS_Store

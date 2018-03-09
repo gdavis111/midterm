@@ -1,9 +1,17 @@
-<nav data-logged-in="<%=logged_in%>">
-	<button id="view_orders">orders</button>
-	<button id="view_menu">menu</button>
-	<button id="login_button">login</button>
-	<div>
-		<span id="username" data-id="<%=username_and_id.id%>"><%=username_and_id.username%></span>
-		<button id="logout_button">logout</button>
-	</div>
-</nav>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <nav data-logged-in="<%=logged_in%>">
+	   <button id="view_orders" class="btn btn-primary">ORDER</button>
+	   <button id="view_menu" class="btn btn-primary">MENU</button>
+	   <button id="login_button" class="btn btn-primary">LOGIN</button>
+	   <div>
+		<span id="username"></span>
+		<button id="logout_button" class="btn btn-primary">LOGOUT</button>
+	 </div>
+  </nav>
+
+</html>
