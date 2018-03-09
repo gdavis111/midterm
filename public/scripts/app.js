@@ -1,5 +1,8 @@
 // TODO deal with double-clicking on items being added to cart
 // TODO items maybe disappearing
+// TODO make the rest of food items unclickable while specifying quantity
+// TODO make placeOrder and orders buttons work
+// TODO registration appears to be broken after failed attemt to register using bad phone number...
 
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
@@ -52,6 +55,8 @@ const renderCart = (cart) => {
     $cart.append(`<span>Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
+    const $order = $('#order');
+
     $('.cart_item').on('click', removeThisFromCart);
     $('#order').on('click', placeOrder);
   };
@@ -73,7 +78,8 @@ const renderCart = (cart) => {
   }
 };
 
-function placeOrder() {
+function placeOrder(event) {
+  event.stopImmediatePropagation();
   if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
@@ -193,6 +199,8 @@ function reflectLoginStatus() {
 
     });
     $('#view_orders').on('click', function(event) {
+
+      event.stopImmediatePropagation();
       displayLoginFormAsync()
         .then((user_logged_in) => {
           if(user_logged_in) {
@@ -305,6 +313,9 @@ function displayLoginFormAsync() {
     });
 
     $(document).on('click', function() {
+
+      console.log('document clicked');
+
       resolve(false);
       exit();
     }); 
