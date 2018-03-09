@@ -1,9 +1,6 @@
-// TODO deal with double-clicking on items being added to cart
-// TODO items maybe disappearing
-// TODO make the rest of food items unclickable while specifying quantity
-// TODO make placeOrder and orders buttons work
-// TODO registration appears to be broken after failed attemt to register using bad phone number...
-
+// TODO deal with double-clicking on items being added to cart. This makes the quantity specifier mulitiply
+// TODO username disappears on refresh
+//
 
 // *-----------------------*
 // | MENU AND CART DISPLAY |
@@ -14,12 +11,14 @@ const renderMenu = (menu) => {
   let $category          = $(`<div class="${current_category}"></div>`);
   const $menu            = $('#menu');
   $menu.empty();
+  $category.append(`<h3>${current_category}</h3>`);
 
   for(let product of menu) {
     if(current_category != product.category) {
       $menu.append($category);
       current_category = product.category;
       $category = $(`<div class="${current_category}"></div>`);
+      $category.append(`<h3>${current_category}</h3>`);
     }
     $product = $(`
       <div class="product">
@@ -69,6 +68,8 @@ const renderCart = (cart) => {
 
   if($.isEmptyObject(cart)) {
     const returning_cart = $cart.data('json');
+    $cart.data('json', '');
+
     if(!$.isEmptyObject(returning_cart)) {
       printHTML(returning_cart);
     }
@@ -227,13 +228,18 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
 
+    function windowClick() {
+      exit();
+      resolve(false);
+    }
+
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
     const route                = "/users/register";
     const exit                 = () => {
       $form.off('submit');
       $register_section.off('click');
-      $(window).off('click');
+      window.removeEventListener('click', windowClick);
       $register_section.hide();
     };
 
@@ -245,10 +251,7 @@ function displayRegistrationFormAsync() {
       event.stopPropagation();
     });
 
-    $(window).on('click', function() {
-      exit();
-      resolve(false);
-    });
+    window.addEventListener('click', windowClick, true);
 
     $register_section.fadeIn();
 
@@ -257,6 +260,8 @@ function displayRegistrationFormAsync() {
 
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
+
+    // debugger;
 
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');

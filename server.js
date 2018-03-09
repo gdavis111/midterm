@@ -30,7 +30,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'session',
-  secret: 'Listen... doo wah oooh... Do you want to know a secret?.. doo wah oooh'
+  secret: 'Listen... doo wah oooh... Do you want to know a secret?.. doo wah oooh',
+  maxAge: 24 * 60 * 60 * 1000
 }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
