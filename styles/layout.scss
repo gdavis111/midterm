@@ -36,11 +36,10 @@ nav div {
 }
 
 nav {
-  float: right;
-  width: 20%;
+  width: 100%;
   position: fixed;
-  right: 1%;
   padding: 1% 1% 1% 1%;
+  background-color: black;
 }
 
 section.cart-login-register {
@@ -59,7 +58,8 @@ button#view_menu {
 }
 
 button#login_button {
-
+  display: block;
+  float: right;
 }
 
 main {
@@ -228,6 +228,6 @@ form.login-form {
 }
 */
 
-
+/*----------------------------------------------------------------*/
 
 
