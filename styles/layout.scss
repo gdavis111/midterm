@@ -30,7 +30,6 @@ main {
 
 #login,
 #register,
-#specify_quantity,
 #login_button,
 nav div {
 	display: none;
@@ -97,10 +96,6 @@ div.product span {
 
 div.product small {
   float: right;
-}
-
-div.drink {
-
 }
 
 div.drink {
@@ -219,10 +214,19 @@ button#order {
 
 }
 
+/*#register {
+  width: 292px;
+  padding: 10px;
+  position: fixed;
+  top: 50%;
+  bottom: 50%;
+  right: 749px;
+}
 
-
-
-
+form.login-form {
+  font-size: 15px;
+}
+*/
 
 
 
