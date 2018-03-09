@@ -18,7 +18,7 @@
       <section id="menu">
       </section>
     </main>
-
+  <section class="cart-login-register">
     <article id="cart" data-json="<%=cart%>">
     </article>
 
@@ -32,7 +32,7 @@
     </article>
 
     <article id="register">
-      <form action="/register" method="POST">
+      <form action="/register" method="POST" class="login-form">
         <span>username: </span><input type="text" name="username">
         <span>password: </span><input type="password" name="password">
         <span>phone number: </span><input type="text" name="phone_number">
@@ -46,7 +46,7 @@
       <button class="minus">-</button>
       <button class="add">Add To Cart</button>
       <button class="cancel">Cancel</button>
-    </article>  
-
+    </article>
+  </section>
   </body>
 </html>

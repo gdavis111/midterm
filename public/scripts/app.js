@@ -1,4 +1,8 @@
 // TODO deal with double-clicking on items being added to cart
+// TODO items maybe disappearing
+// TODO make the rest of food items unclickable while specifying quantity
+// TODO make placeOrder and orders buttons work
+// TODO registration appears to be broken after failed attemt to register using bad phone number...
 
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
@@ -51,6 +55,10 @@ const renderCart = (cart) => {
     $cart.append(`<span>Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
+    const $order = $('#order');
+
+    // debugger;
+
     $('.cart_item').on('click', removeThisFromCart);
     $('#order').on('click', placeOrder);
   };
@@ -72,8 +80,9 @@ const renderCart = (cart) => {
   }
 };
 
-function placeOrder() {
-  if(!$('nav').data('logged_in')) {
+function placeOrder(event) {
+  event.stopImmediatePropagation();
+  if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
       if(user_logged_in) {
@@ -158,7 +167,7 @@ function displayQuantityForm() {
 }
 
 function reflectLoginStatus() {
-  const logged_in = $('nav').data('logged_in');
+  const logged_in = $('nav').data('logged-in');
 
   if(logged_in) {
     $('#login_button').hide();
@@ -192,6 +201,7 @@ function reflectLoginStatus() {
 
     });
     $('#view_orders').on('click', function(event) {
+      event.stopImmediatePropagation();
       displayLoginFormAsync()
         .then((user_logged_in) => {
           if(user_logged_in) {
@@ -206,7 +216,7 @@ function reflectLoginStatus() {
   }
 }
 
-function displayRegistrationForm() {
+function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
 
     // TODO write appropriate resolutions and rejections for this guy
@@ -217,7 +227,7 @@ function displayRegistrationForm() {
       $form.off('submit');
       $register_section.off('click');
       $(document).off('click');
-      $register_section.fadeOut();
+      $register_section.hide();
     };
 
     $form.on('submit', function(event) {
@@ -227,19 +237,18 @@ function displayRegistrationForm() {
         url: "/users/register",
         data: $form.serialize()
       })
-      .done((username) => {
+      .done((username_and_id) => {
         exit();
 
         $('#username')
-        .data('username', username)
-        .text(username);
+        .data('id', username_and_id.id)
+        .text(username_and_id.username);
 
-        $('nav').data('logged_in', true);
+        $('nav').data('logged-in', true);
         resolve(true);
       })
       .fail((message) => {
-        exit();
-        reject(message);
+        alert(message);
       });
     });
 
@@ -267,12 +276,14 @@ function displayLoginFormAsync() {
       $form.off('submit');
       $login_section.off('click');
       $(document).off('click');
-      $login_section.fadeOut();
+      $login_section.hide();
     };
 
-    $registration_link.on('click', function() {
+    $registration_link.on('click', function(event) {
+      event.stopImmediatePropagation();
       exit();
-      displayRegistrationForm();
+      displayRegistrationFormAsync()
+      .then((status) => resolve(status));
     });
 
     $form.on('submit', function(event) {
@@ -282,14 +293,14 @@ function displayLoginFormAsync() {
         url: "/users/login",
         data: $form.serialize()
       })
-      .done((username) => {
+      .done((username_and_id) => {
         exit();
 
         $('#username')
-        .data('username', username)
-        .text(username);
+        .data('id', username_and_id.id)
+        .text(username_and_id.username);
 
-        $('nav').data('logged_in', true);
+        $('nav').data('logged-in', true);
         resolve(true);
       })
       .fail((message) => {
