@@ -80,7 +80,8 @@ const renderCart = (cart) => {
   }
 };
 
-function placeOrder() {
+function placeOrder(event) {
+  event.stopImmediatePropagation();
   if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
