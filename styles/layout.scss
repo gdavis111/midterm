@@ -1,26 +1,32 @@
 body {
-  background-image:url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
+  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-
-  h1 {
-    color: #244751;
-  }
+  background-size: cover;
 }
+
+body h1 {
+  color: #244751;
+}
+
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
 body {
   margin: 0;
   color: #244751;
   background-color: #eee;
 }
+
 * {
   font-family: 'Roboto Condensed', sans-serif;
 }
+
 main {
   width: 450px;
   margin: 0 auto;
@@ -39,7 +45,8 @@ nav {
   width: 100%;
   position: fixed;
   padding: 1% 1% 1% 1%;
-  background-color: black;
+  background-color: wheat;
+  height: 73px ;
 }
 
 section.cart-login-register {
@@ -60,6 +67,26 @@ button#view_menu {
 button#login_button {
   display: block;
   float: right;
+}
+
+button#logout_button {
+  display: block;
+  float: right;
+  position: relative;
+  right: -75px;
+  top: -33px;
+}
+
+#username {
+  float: right;
+  color: black;
+  padding-left: 8px;
+  padding-right: 6px;
+  float: right;
+  position: relative;
+  top: -34px;
+  right: 47%;
+  font-size: 30px;
 }
 
 main {
@@ -214,6 +241,33 @@ button#order {
 
 }
 
+#username {
+
+}
+
+article#login {
+  display: none;
+  position: fixed;
+  top: 5px;
+  font-size: 17px;
+  right: 25%;
+  left: 35%;
+}
+
+article#register {
+  display: none;
+  position: fixed;
+  top: 5px;
+  font-size: 17px;
+  right: 25%;
+  left: 35%;
+  width: 646px;
+}
+
+.input_register {
+  position: relative;
+  left: 127px;
+}
 /*#register {
   width: 292px;
   padding: 10px;

@@ -57,7 +57,7 @@ const renderCart = (cart) => {
       $cart.append($product);
     }
 
-    $cart.append(`<span>Total $${total}</span>`);
+    $cart.append(`<span class="total">Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
@@ -73,7 +73,7 @@ const renderCart = (cart) => {
       printHTML(returning_cart);
     }
     else {
-      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');      
+      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');
     }
   }
   else {
@@ -290,7 +290,7 @@ function displayRegistrationFormAsync() {
     $(document).on('click', function() {
       resolve(false);
       exit();
-    }); 
+    });
 
     $register_section.fadeIn();
 
@@ -329,7 +329,7 @@ function displayLoginFormAsync() {
     $(document).on('click', function() {
       resolve(false);
       exit();
-    }); 
+    });
 
     $login_section.fadeIn();
   });
