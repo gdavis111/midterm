@@ -39,7 +39,7 @@ const renderCart = (cart) => {
 
       let $product = $(`
         <div class="cart_item" data-id="${product_id}">
-          <small>${qty}</small>
+          <small class="three">${qty}</small>
           <span>${product.name}</span>
           <small>$${price_sum}</small>
         </div>
@@ -48,7 +48,7 @@ const renderCart = (cart) => {
       $cart.append($product);
     }
 
-    $cart.append(`<span>Total $${total}</span>`);
+    $cart.append(`<span class="total">Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
@@ -64,7 +64,7 @@ const renderCart = (cart) => {
       printHTML(returning_cart);
     }
     else {
-      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');      
+      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');
     }
   }
   else {
@@ -250,7 +250,7 @@ function displayRegistrationForm() {
     $(document).on('click', function() {
       resolve(false);
       exit();
-    }); 
+    });
 
     $register_section.fadeIn();
 
@@ -305,7 +305,7 @@ function displayLoginFormAsync() {
     $(document).on('click', function() {
       resolve(false);
       exit();
-    }); 
+    });
 
     $login_section.fadeIn();
   });
@@ -319,16 +319,6 @@ $(() => {
   })
   .done((menu) => {
     renderMenu(menu);
-<<<<<<< HEAD
-
-    // TODO figure out a smart way to pass external data to this
-    // script. i.e renderCart below ought to be able to display the
-    // cart of a user who's returning to the page. And we need to know whether
-    // or not a user is already logged in! Probably the way to
-    // do this is with data attributes.
-
-=======
->>>>>>> daf120830121cb048b3f701d950286b19a57290b
     renderCart();
     reflectLoginStatus();
   });

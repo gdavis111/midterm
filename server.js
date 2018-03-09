@@ -48,7 +48,7 @@ app.use(express.static("public"));
 
 // Seperated Routes for each Resource
 const userMiddle = require("./routes/users.js")(DataAccess);
-const twilioMiddle = require("./routes/users.js");
+const twilioMiddle = require("./routes/twilio.js")();
 app.use("/users", userMiddle.routes);
 app.use("/twilio", twilioMiddle.routes);
 
@@ -68,7 +68,7 @@ app.get("/menu", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.render("home", { 
+  res.render("home", {
     logged_in: userMiddle.verify(req.session.username),
     cart: req.session.cart
   });
@@ -84,7 +84,7 @@ app.post("/cart/:id", (req, res) => {
     cart = {};
   }
   else {
-    cart = JSON.parse(req.session.cart); 
+    cart = JSON.parse(req.session.cart);
   }
 
   cart[req.params.id] = {

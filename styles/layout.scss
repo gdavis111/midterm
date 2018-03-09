@@ -1,5 +1,7 @@
 body {
-  background-color: #EEE;
+  background-image:url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
   h1 {
     color: #244751;
@@ -22,7 +24,6 @@ body {
 main {
   width: 450px;
   margin: 0 auto;
-  background-color: white;
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -46,7 +47,6 @@ nav {
 section.cart-login-register {
   width: 450px;
   margin: 0 auto;
-  background-color: white;
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -82,8 +82,13 @@ div.product {
   margin-bottom: 1%;
   padding-top: 1%;
   padding-bottom: 1%;
-  font-size: 175%
+  font-size: 175%;
+  background-color: white;
+  border-radius: 10px;
+}
 
+div.product:hover {
+  background-color: grey;
 }
 
 div.product span {
@@ -104,16 +109,34 @@ div.drink {
 
 article#cart {
   margin: 10px;
-  font-size: 15px;
+  font-size: 12px;
+  position: fixed;
+  top: 88px;
+  right: 108px;
+  width: 15%;
 }
 
 article#cart h3 {
   font-size: 38px;
+  width: 85%;
 }
 
-article#specify_quantity span {
-  font-size: 15px;
-  margin-right: 2%;
+#specify_quantity {
+    display: none;
+    width: 346px;
+    height: 70px;
+    border: 10px;
+    background-color: yellow;
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    right: 732px;
+    padding: 20px;
+
+}
+
+article#pecific_quantity span {
+font-size: 15px;
 }
 
 article#specify_quantity .plus {
@@ -141,11 +164,25 @@ article#specify_quantity .cancel {
 }
 
 div.cart_item {
+  border: 1px solid black;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 175%;
+  background-color: white;
+  border-radius: 10px;
 
 }
 
 div.cart_item small {
+  float: right;
+}
 
+div.cart_item small.three {
+  float: left;
+  padding-right: 10%;
 }
 
 div.cart_item span {
@@ -153,10 +190,32 @@ div.cart_item span {
 }
 
 span.total {
-
+  font-size: 10px;
+  border: 1px solid black;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 175%;
+  background-color: white;
+  border-radius: 10px;
+  float: right;
 }
 
 button#order {
+  border: 1px solid black;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-size: 175%;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  left: 66px;
+  bottom: -44px;
 
 }
 
