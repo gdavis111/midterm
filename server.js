@@ -30,7 +30,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'session',
-  secret: 'Listen... doo wah oooh... Do you want to know a secret?.. doo wah oooh'
+  secret: 'Listen... doo wah oooh... Do you want to know a secret?.. doo wah oooh',
+  maxAge: 24 * 60 * 60 * 1000
 }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -45,11 +46,15 @@ app.use(express.static("public"));
 // | ROUTES |
 // *--------*
 
-const userRoutes = require("./routes/users.js")(DataAccess);
-const twilioMiddle = require("./routes/twilio.js")();
-app.use("/users", userRoutes);
-app.use("/twilio", twilioMiddle.routes);
 
+
+// *--------*
+// | TWILIO |
+// *--------*
+const userRoutes = require("./routes/users.js")(DataAccess);
+//const twilioMiddle = require("./routes/twilio.js")();
+app.use("/users", userRoutes);
+//app.use("/twilio", twilioMiddle.routes);
 
 app.get("/", (req, res) => {
   if(req.session) {
@@ -80,14 +85,14 @@ app.get("/home", (req, res) => {
   const uai = req.session.username_and_id;
   DataAccess.verifyPromise(uai)
   .then(() => {
-    res.render("home", { 
+    res.render("home", {
       logged_in: true,
       username_and_id: uai,
       cart: req.session.cart
     });
   })
   .catch(() => {
-    res.render("home", { 
+    res.render("home", {
       logged_in: false,
       username_and_id: {
         username: '',
@@ -96,7 +101,7 @@ app.get("/home", (req, res) => {
       cart: req.session.cart
     });
   });
-  
+
 });
 
 app.get("/orders", (req, res) => {

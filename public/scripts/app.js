@@ -1,9 +1,5 @@
-// TODO deal with double-clicking on items being added to cart
-// TODO items maybe disappearing
-// TODO make the rest of food items unclickable while specifying quantity
-// TODO make placeOrder and orders buttons work
-// TODO registration appears to be broken after failed attemt to register using bad phone number...
-
+// TODO deal with double-clicking on items being added to cart. This makes the quantity specifier mulitiply
+//
 
 // *-----------------------*
 // | MENU AND CART DISPLAY |
@@ -14,12 +10,14 @@ const renderMenu = (menu) => {
   let $category          = $(`<div class="${current_category}"></div>`);
   const $menu            = $('#menu');
   $menu.empty();
+  $category.append(`<h3>${current_category}</h3>`);
 
   for(let product of menu) {
     if(current_category != product.category) {
       $menu.append($category);
       current_category = product.category;
       $category = $(`<div class="${current_category}"></div>`);
+      $category.append(`<h3>${current_category}</h3>`);
     }
     $product = $(`
       <div class="product">
@@ -69,6 +67,8 @@ const renderCart = (cart) => {
 
   if($.isEmptyObject(cart)) {
     const returning_cart = $cart.data('json');
+    $cart.data('json', '');
+
     if(!$.isEmptyObject(returning_cart)) {
       printHTML(returning_cart);
     }
@@ -81,9 +81,9 @@ const renderCart = (cart) => {
   }
 };
 
-// *----------------*
-// | CLICK HANDLERS |
-// *----------------*
+// *-------------------------*
+// | CLICK AND FORM HANDLERS |
+// *-------------------------*
 
 function placeOrder(event) {
   event.stopImmediatePropagation();
@@ -129,21 +129,30 @@ function addToCart(product_json, qty) {
 }
 
 function displayQuantityForm() {
+
   const $quantity_form   = $('#specify_quantity');
-  const $qty             = $quantity_form.find('span');
+  const $name            = $quantity_form.find('.name');
+  const $qty             = $quantity_form.find('.qty');
   const $plus            = $quantity_form.find('.plus');
   const $minus           = $quantity_form.find('.minus');
   const $add             = $quantity_form.find('.add');
   const $cancel          = $quantity_form.find('.cancel');
   const product_json     = $(this).data('product_json');
-  const exit             = () => {
+  const name             = JSON.parse(product_json).name;
+  const clear            = () => {
     $plus.off('click');
     $minus.off('click');
     $add.off('click');
     $cancel.off('click');
+  };
+  const exit             = () => {
+    clear();
     $quantity_form.fadeOut();
   };
 
+  clear();
+
+  $name.text(name);
   $qty.text(1);
 
   $plus.on('click', function() {
@@ -171,6 +180,7 @@ function displayQuantityForm() {
 
 }
 
+
 function logoutButtonHandler() {
   $.ajax({
     method: "PUT",
@@ -191,33 +201,6 @@ function loginButtonHander(event, callback) {
       // TODO you can do better than alert...
       alert(message);
     });
-}
-
-
-
-function reflectLoginStatus() {
-  const logged_in = $('nav').data('logged-in');
-
-  if(logged_in) {
-    $('#login_button').hide();
-    $('nav').find('#logout_button').closest('div').show();
-
-    $('#logout_button').on('click', logoutButtonHandler);
-  }
-
-  else {
-    $('#login_button').show();
-    $('nav').find('#logout_button').closest('div').hide();
-
-    $('#login_button').on('click', (event) => {
-      loginButtonHander.bind(this)(event, reflectLoginStatus);
-    });
-
-    $('#view_orders').on('click', (event) => {
-      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
-    });
-
-  }
 }
 
 function formSubmissionHandler(event, route, exit, resolve, reject) {
@@ -244,8 +227,15 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
   });
 }
 
+
+
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
+
+    function windowClick() {
+      exit();
+      resolve(false);
+    }
 
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
@@ -253,7 +243,7 @@ function displayRegistrationFormAsync() {
     const exit                 = () => {
       $form.off('submit');
       $register_section.off('click');
-      $(document).off('click');
+      window.removeEventListener('click', windowClick);
       $register_section.hide();
     };
 
@@ -261,36 +251,11 @@ function displayRegistrationFormAsync() {
       formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    // $form.on('submit', function(event) {
-    //   event.preventDefault();
-    //   $.ajax({
-    //     method: "PUT",
-    //     url: "/users/register",
-    //     data: $form.serialize()
-    //   })
-    //   .done((username_and_id) => {
-    //     exit();
-
-    //     $('#username')
-    //     .data('id', username_and_id.id)
-    //     .text(username_and_id.username);
-
-    //     $('nav').data('logged-in', true);
-    //     resolve(true);
-    //   })
-    //   .fail((message) => {
-    //     alert(message);
-    //   });
-    // });
-
     $register_section.on('click', function(event) {
       event.stopPropagation();
     });
+    window.addEventListener('click', windowClick, true);
 
-    $(document).on('click', function() {
-      resolve(false);
-      exit();
-    });
 
     $register_section.fadeIn();
 
@@ -299,6 +264,9 @@ function displayRegistrationFormAsync() {
 
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
+
+    // debugger;
+
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');
     const $registration_link   = $login_section.find('#new');
@@ -307,7 +275,7 @@ function displayLoginFormAsync() {
       $registration_link.off('click');
       $form.off('submit');
       $login_section.off('click');
-      $(document).off('click');
+      $('window').off('click');
       $login_section.hide();
     };
 
@@ -326,14 +294,45 @@ function displayLoginFormAsync() {
       event.stopPropagation();
     });
 
-    $(document).on('click', function() {
-      resolve(false);
+    $(window).on('click', function() {
       exit();
+      resolve(false);
+
     });
 
     $login_section.fadeIn();
   });
 }
+
+// *---------*
+// | GENERAL |
+// *---------*
+
+function reflectLoginStatus() {
+  const logged_in = $('nav').data('logged-in');
+
+  if(logged_in) {
+    $('#login_button').hide();
+    $('nav').find('#logout_button').closest('div').show();
+
+    $('#logout_button').on('click', logoutButtonHandler);
+  }
+
+  else {
+    $('#login_button').show();
+    $('nav').find('#logout_button').closest('div').hide();
+
+    $('#login_button').on('click', (event) => {
+      loginButtonHander.bind(this)(event, reflectLoginStatus);
+    });
+
+    $('#view_orders').on('click', (event) => {
+      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
+    });
+
+  }
+}
+
 
 $(() => {
 

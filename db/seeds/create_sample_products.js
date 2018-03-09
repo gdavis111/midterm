@@ -15,15 +15,15 @@ exports.seed = function(knex, Promise) {
     })
     .then(function () {
       return Promise.all([
-        knex('products').insert({id: 1, name: 'Cheese', price: '12.0', category_id: '1'}),
-        knex('products').insert({id: 2, name: 'Pepperoni', price: '13.50', category_id: '1'}),
-        knex('products').insert({id: 3, name: 'Vegetarian', price: '13.0', category_id: '1'}),
-        knex('products').insert({id: 4, name: 'Canadian', price: '15.50', category_id: '1'}),
-        knex('products').insert({id: 5, name: 'Meat Lovers', price: '16.50', category_id: '1'}),
-        knex('products').insert({id: 6, name: 'Hawaiian', price: '14.0', category_id: '1'}),
+        knex('products').insert({id: 1, name: 'Cheese pizza', price: '12.0', category_id: '1'}),
+        knex('products').insert({id: 2, name: 'Pepperoni pizza', price: '13.50', category_id: '1'}),
+        knex('products').insert({id: 3, name: 'Vegetarian pizza', price: '13.0', category_id: '1'}),
+        knex('products').insert({id: 4, name: 'Canadian pizza', price: '15.50', category_id: '1'}),
+        knex('products').insert({id: 5, name: 'Meat Lovers pizza', price: '16.50', category_id: '1'}),
+        knex('products').insert({id: 6, name: 'Hawaiian pizza', price: '14.0', category_id: '1'}),
         knex('products').insert({id: 7, name: 'Hamburger', price: '10.0', category_id: '2'}),
         knex('products').insert({id: 8, name: 'Cheeseburger', price: '11.0', category_id: '2'}),
-        knex('products').insert({id: 9, name: 'Bacon Cheeseburger', price: '12.50', category_id: '2'}),
+        knex('products').insert({id: 9, name: 'Chickenburger', price: '12.50', category_id: '2'}),
         knex('products').insert({id: 10, name: 'Turkey Club', price: '13.0', category_id: '2'}),
         knex('products').insert({id: 11, name: 'BLT', price: '12.50', category_id: '2'}),
         knex('products').insert({id: 12, name: 'Fresh Cut Fries', price: '4.0', category_id: '3'}),
