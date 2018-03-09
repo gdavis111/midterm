@@ -81,9 +81,9 @@ const renderCart = (cart) => {
   }
 };
 
-// *----------------*
-// | CLICK HANDLERS |
-// *----------------*
+// *-------------------------*
+// | CLICK AND FORM HANDLERS |
+// *-------------------------*
 
 function placeOrder(event) {
   event.stopImmediatePropagation();
@@ -129,13 +129,16 @@ function addToCart(product_json, qty) {
 }
 
 function displayQuantityForm() {
+
   const $quantity_form   = $('#specify_quantity');
-  const $qty             = $quantity_form.find('span');
+  const $name            = $quantity_form.find('.name');
+  const $qty             = $quantity_form.find('.qty');
   const $plus            = $quantity_form.find('.plus');
   const $minus           = $quantity_form.find('.minus');
   const $add             = $quantity_form.find('.add');
   const $cancel          = $quantity_form.find('.cancel');
   const product_json     = $(this).data('product_json');
+  const name             = JSON.parse(product_json).name;
   const exit             = () => {
     $plus.off('click');
     $minus.off('click');
@@ -144,6 +147,7 @@ function displayQuantityForm() {
     $quantity_form.fadeOut();
   };
 
+  $name.text(name);
   $qty.text(1);
 
   $plus.on('click', function() {
@@ -171,6 +175,7 @@ function displayQuantityForm() {
 
 }
 
+
 function logoutButtonHandler() {
   $.ajax({
     method: "PUT",
@@ -191,33 +196,6 @@ function loginButtonHander(event, callback) {
       // TODO you can do better than alert...
       alert(message);
     });
-}
-
-
-
-function reflectLoginStatus() {
-  const logged_in = $('nav').data('logged-in');
-
-  if(logged_in) {
-    $('#login_button').hide();
-    $('nav').find('#logout_button').closest('div').show();
-
-    $('#logout_button').on('click', logoutButtonHandler);
-  }
-
-  else {
-    $('#login_button').show();
-    $('nav').find('#logout_button').closest('div').hide();
-
-    $('#login_button').on('click', (event) => {
-      loginButtonHander.bind(this)(event, reflectLoginStatus);
-    });
-
-    $('#view_orders').on('click', (event) => {
-      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
-    });
-
-  }
 }
 
 function formSubmissionHandler(event, route, exit, resolve, reject) {
@@ -244,6 +222,8 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
   });
 }
 
+
+
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
 
@@ -253,7 +233,7 @@ function displayRegistrationFormAsync() {
     const exit                 = () => {
       $form.off('submit');
       $register_section.off('click');
-      $(document).off('click');
+      $(window).off('click');
       $register_section.hide();
     };
 
@@ -261,36 +241,14 @@ function displayRegistrationFormAsync() {
       formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    // $form.on('submit', function(event) {
-    //   event.preventDefault();
-    //   $.ajax({
-    //     method: "PUT",
-    //     url: "/users/register",
-    //     data: $form.serialize()
-    //   })
-    //   .done((username_and_id) => {
-    //     exit();
-
-    //     $('#username')
-    //     .data('id', username_and_id.id)
-    //     .text(username_and_id.username);
-
-    //     $('nav').data('logged-in', true);
-    //     resolve(true);
-    //   })
-    //   .fail((message) => {
-    //     alert(message);
-    //   });
-    // });
-
     $register_section.on('click', function(event) {
       event.stopPropagation();
     });
 
-    $(document).on('click', function() {
-      resolve(false);
+    $(window).on('click', function() {
       exit();
-    }); 
+      resolve(false);
+    });
 
     $register_section.fadeIn();
 
@@ -299,6 +257,7 @@ function displayRegistrationFormAsync() {
 
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
+
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');
     const $registration_link   = $login_section.find('#new');
@@ -307,7 +266,7 @@ function displayLoginFormAsync() {
       $registration_link.off('click');
       $form.off('submit');
       $login_section.off('click');
-      $(document).off('click');
+      $('window').off('click');
       $login_section.hide();
     };
 
@@ -326,14 +285,44 @@ function displayLoginFormAsync() {
       event.stopPropagation();
     });
 
-    $(document).on('click', function() {
-      resolve(false);
+    $(window).on('click', function() {
       exit();
-    }); 
+      resolve(false);
+    });
 
     $login_section.fadeIn();
   });
 }
+
+// *---------*
+// | GENERAL |
+// *---------*
+
+function reflectLoginStatus() {
+  const logged_in = $('nav').data('logged-in');
+
+  if(logged_in) {
+    $('#login_button').hide();
+    $('nav').find('#logout_button').closest('div').show();
+
+    $('#logout_button').on('click', logoutButtonHandler);
+  }
+
+  else {
+    $('#login_button').show();
+    $('nav').find('#logout_button').closest('div').hide();
+
+    $('#login_button').on('click', (event) => {
+      loginButtonHander.bind(this)(event, reflectLoginStatus);
+    });
+
+    $('#view_orders').on('click', (event) => {
+      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
+    });
+
+  }
+}
+
 
 $(() => {
 
