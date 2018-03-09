@@ -61,6 +61,10 @@ app.get("/", (req, res) => {
   res.render("title");
 });
 
+app.get("/testing", (req, res) => {
+  res.render("testing");
+});
+
 app.get("/menu", (req, res) => {
   DataAccess.applyToMenu((menu) => {
     res.json(menu);
