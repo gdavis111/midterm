@@ -159,6 +159,7 @@ function displayQuantityForm() {
 
 function reflectLoginStatus() {
   const logged_in = $('nav').data('logged_in');
+
   if(logged_in) {
     $('#login_button').hide();
     $('nav').find('#logout_button').closest('div').show();
@@ -171,6 +172,7 @@ function reflectLoginStatus() {
       .done(() => window.location.replace("/"));
     });
   }
+
   else {
     $('#login_button').show();
     $('nav').find('#logout_button').closest('div').hide();
@@ -200,17 +202,78 @@ function reflectLoginStatus() {
           alert(message);
         });
     });
+
   }
+}
+
+function displayRegistrationForm() {
+  return new Promise(function(resolve, reject) {
+
+    // TODO write appropriate resolutions and rejections for this guy
+
+    const $register_section    = $('#register');
+    const $form                = $register_section.find('form');
+    const exit                 = () => {
+      $form.off('submit');
+      $register_section.off('click');
+      $(document).off('click');
+      $register_section.fadeOut();
+    };
+
+    $form.on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        method: "PUT",
+        url: "/users/register",
+        data: $form.serialize()
+      })
+      .done((username) => {
+        exit();
+
+        $('#username')
+        .data('username', username)
+        .text(username);
+
+        $('nav').data('logged_in', true);
+        resolve(true);
+      })
+      .fail((message) => {
+        exit();
+        reject(message);
+      });
+    });
+
+    $register_section.on('click', (event) => {
+      event.stopPropagation();
+    });
+
+    $(document).on('click', function() {
+      resolve(false);
+      exit();
+    }); 
+
+    $register_section.fadeIn();
+
+  });
 }
 
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
-    const $login_section    = $('#login');
-    const $form             = $login_section.find('form');
-    const exit              = () => {
+    const $login_section       = $('#login');
+    const $form                = $login_section.find('form');
+    const $registration_link   = $login_section.find('#new');
+    const exit                 = () => {
+      $registration_link.off('click');
       $form.off('submit');
+      $login_section.off('click');
+      $(document).off('click');
       $login_section.fadeOut();
     };
+
+    $registration_link.on('click', function() {
+      exit();
+      displayRegistrationForm();
+    });
 
     $form.on('submit', function(event) {
       event.preventDefault();
@@ -221,7 +284,7 @@ function displayLoginFormAsync() {
       })
       .done((username) => {
         exit();
-        
+
         $('#username')
         .data('username', username)
         .text(username);
@@ -229,18 +292,21 @@ function displayLoginFormAsync() {
         $('nav').data('logged_in', true);
         resolve(true);
       })
-      .fail(() => {
+      .fail((message) => {
         exit();
-        reject('there was a problem logging in');
+        reject(message);
       });
     });
+
     $login_section.on('click', (event) => {
       event.stopPropagation();
     });
+
     $(document).on('click', function() {
       resolve(false);
       exit();
     }); 
+
     $login_section.fadeIn();
   });
 }
