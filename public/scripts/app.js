@@ -1,4 +1,13 @@
 // TODO deal with double-clicking on items being added to cart
+// TODO items maybe disappearing
+// TODO make the rest of food items unclickable while specifying quantity
+// TODO make placeOrder and orders buttons work
+// TODO registration appears to be broken after failed attemt to register using bad phone number...
+
+
+// *-----------------------*
+// | MENU AND CART DISPLAY |
+// *-----------------------*
 
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
@@ -39,7 +48,7 @@ const renderCart = (cart) => {
 
       let $product = $(`
         <div class="cart_item" data-id="${product_id}">
-          <small class="three">${qty}</small>
+          <small>${qty}</small>
           <span>${product.name}</span>
           <small>$${price_sum}</small>
         </div>
@@ -48,7 +57,7 @@ const renderCart = (cart) => {
       $cart.append($product);
     }
 
-    $cart.append(`<span class="total">Total $${total}</span>`);
+    $cart.append(`<span>Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
@@ -64,7 +73,7 @@ const renderCart = (cart) => {
       printHTML(returning_cart);
     }
     else {
-      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');
+      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');      
     }
   }
   else {
@@ -72,8 +81,13 @@ const renderCart = (cart) => {
   }
 };
 
-function placeOrder() {
-  if(!$('nav').data('logged_in')) {
+// *----------------*
+// | CLICK HANDLERS |
+// *----------------*
+
+function placeOrder(event) {
+  event.stopImmediatePropagation();
+  if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
       if(user_logged_in) {
@@ -157,100 +171,126 @@ function displayQuantityForm() {
 
 }
 
+function logoutButtonHandler() {
+  $.ajax({
+    method: "PUT",
+    url: "/users/logout"
+  })
+  .done(() => window.location.replace("/"));
+}
+
+function loginButtonHander(event, callback) {
+  event.stopImmediatePropagation();
+  displayLoginFormAsync()
+    .then((user_logged_in) => {
+      if(user_logged_in) {
+        callback();
+      }
+    })
+    .catch((message) => {
+      // TODO you can do better than alert...
+      alert(message);
+    });
+}
+
+
+
 function reflectLoginStatus() {
-  const logged_in = $('nav').data('logged_in');
+  const logged_in = $('nav').data('logged-in');
 
   if(logged_in) {
     $('#login_button').hide();
     $('nav').find('#logout_button').closest('div').show();
 
-    $('#logout_button').on('click', function() {
-      $.ajax({
-        method: "PUT",
-        url: "/users/logout"
-      })
-      .done(() => window.location.replace("/"));
-    });
+    $('#logout_button').on('click', logoutButtonHandler);
   }
 
   else {
     $('#login_button').show();
     $('nav').find('#logout_button').closest('div').hide();
 
-    $('#login_button').on('click', function(event) {
-      event.stopImmediatePropagation();
-      displayLoginFormAsync()
-        .then((user_logged_in) => {
-          if(user_logged_in) {
-            reflectLoginStatus();
-          }
-        })
-        .catch((message) => {
-          // TODO you can do better than alert...
-          alert(message);
-        });
-
+    $('#login_button').on('click', (event) => {
+      loginButtonHander.bind(this)(event, reflectLoginStatus);
     });
-    $('#view_orders').on('click', function(event) {
-      displayLoginFormAsync()
-        .then((user_logged_in) => {
-          if(user_logged_in) {
-            window.location.replace("/orders");
-          }
-        })
-        .catch((message) => {
-          alert(message);
-        });
+
+    $('#view_orders').on('click', (event) => {
+      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
     });
 
   }
 }
 
-function displayRegistrationForm() {
-  return new Promise(function(resolve, reject) {
+function formSubmissionHandler(event, route, exit, resolve, reject) {
 
-    // TODO write appropriate resolutions and rejections for this guy
+  event.preventDefault();
+  $.ajax({
+    method: "PUT",
+    url: route,
+    data: $(this).serialize()
+  })
+  .done((username_and_id) => {
+    exit();
+
+    $('#username')
+    .data('id', username_and_id.id)
+    .text(username_and_id.username);
+
+    $('nav').data('logged-in', true);
+    resolve(true);
+  })
+  .fail((message) => {
+    exit();
+    reject(message);
+  });
+}
+
+function displayRegistrationFormAsync() {
+  return new Promise(function(resolve, reject) {
 
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
+    const route                = "/users/register";
     const exit                 = () => {
       $form.off('submit');
       $register_section.off('click');
       $(document).off('click');
-      $register_section.fadeOut();
+      $register_section.hide();
     };
 
     $form.on('submit', function(event) {
-      event.preventDefault();
-      $.ajax({
-        method: "PUT",
-        url: "/users/register",
-        data: $form.serialize()
-      })
-      .done((username) => {
-        exit();
-
-        $('#username')
-        .data('username', username)
-        .text(username);
-
-        $('nav').data('logged_in', true);
-        resolve(true);
-      })
-      .fail((message) => {
-        exit();
-        reject(message);
-      });
+      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    $register_section.on('click', (event) => {
+    // $form.on('submit', function(event) {
+    //   event.preventDefault();
+    //   $.ajax({
+    //     method: "PUT",
+    //     url: "/users/register",
+    //     data: $form.serialize()
+    //   })
+    //   .done((username_and_id) => {
+    //     exit();
+
+    //     $('#username')
+    //     .data('id', username_and_id.id)
+    //     .text(username_and_id.username);
+
+    //     $('nav').data('logged-in', true);
+    //     resolve(true);
+    //   })
+    //   .fail((message) => {
+    //     alert(message);
+    //   });
+    // });
+
+    $register_section.on('click', function(event) {
       event.stopPropagation();
     });
 
     $(document).on('click', function() {
       resolve(false);
       exit();
-    });
+    }); 
 
     $register_section.fadeIn();
 
@@ -262,50 +302,34 @@ function displayLoginFormAsync() {
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');
     const $registration_link   = $login_section.find('#new');
+    const route                = "/users/login/";
     const exit                 = () => {
       $registration_link.off('click');
       $form.off('submit');
       $login_section.off('click');
       $(document).off('click');
-      $login_section.fadeOut();
+      $login_section.hide();
     };
 
-    $registration_link.on('click', function() {
+    $registration_link.on('click', function(event) {
+      event.stopImmediatePropagation();
       exit();
-      displayRegistrationForm();
+      displayRegistrationFormAsync()
+      .then((status) => resolve(status));
     });
 
     $form.on('submit', function(event) {
-      event.preventDefault();
-      $.ajax({
-        method: "PUT",
-        url: "/users/login",
-        data: $form.serialize()
-      })
-      .done((username) => {
-        exit();
-
-        $('#username')
-        .data('username', username)
-        .text(username);
-
-        $('nav').data('logged_in', true);
-        resolve(true);
-      })
-      .fail((message) => {
-        exit();
-        reject(message);
-      });
+      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    $login_section.on('click', (event) => {
+    $login_section.on('click', function(event){
       event.stopPropagation();
     });
 
     $(document).on('click', function() {
       resolve(false);
       exit();
-    });
+    }); 
 
     $login_section.fadeIn();
   });

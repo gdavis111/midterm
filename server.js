@@ -45,20 +45,24 @@ app.use(express.static("public"));
 // | ROUTES |
 // *--------*
 
-
-// Seperated Routes for each Resource
-const userMiddle = require("./routes/users.js")(DataAccess);
+const userRoutes = require("./routes/users.js")(DataAccess);
 const twilioMiddle = require("./routes/twilio.js")();
-app.use("/users", userMiddle.routes);
+app.use("/users", userRoutes);
 app.use("/twilio", twilioMiddle.routes);
-
-// *--------*
-// | TWILIO |
-// *--------*
 
 
 app.get("/", (req, res) => {
-  res.render("title");
+  if(req.session) {
+    if(req.session.isPopulated) {
+      res.redirect('/home');
+    }
+    else {
+      res.render("title");
+    }
+  }
+  else {
+    res.render("title");
+  }
 });
 
 app.get("/testing", (req, res) => {
@@ -72,10 +76,27 @@ app.get("/menu", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.render("home", {
-    logged_in: userMiddle.verify(req.session.username),
-    cart: req.session.cart
+
+  const uai = req.session.username_and_id;
+  DataAccess.verifyPromise(uai)
+  .then(() => {
+    res.render("home", { 
+      logged_in: true,
+      username_and_id: uai,
+      cart: req.session.cart
+    });
+  })
+  .catch(() => {
+    res.render("home", { 
+      logged_in: false,
+      username_and_id: {
+        username: '',
+        id: ''
+      },
+      cart: req.session.cart
+    });
   });
+  
 });
 
 app.get("/orders", (req, res) => {
