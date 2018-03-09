@@ -46,11 +46,15 @@ app.use(express.static("public"));
 // | ROUTES |
 // *--------*
 
+
+
+// *--------*
+// | TWILIO |
+// *--------*
 const userRoutes = require("./routes/users.js")(DataAccess);
 const twilioMiddle = require("./routes/twilio.js")();
 app.use("/users", userRoutes);
 app.use("/twilio", twilioMiddle.routes);
-
 
 app.get("/", (req, res) => {
   if(req.session) {
@@ -66,6 +70,10 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/testing", (req, res) => {
+  res.render("testing");
+});
+
 app.get("/menu", (req, res) => {
   DataAccess.applyToMenu((menu) => {
     res.json(menu);
@@ -77,14 +85,14 @@ app.get("/home", (req, res) => {
   const uai = req.session.username_and_id;
   DataAccess.verifyPromise(uai)
   .then(() => {
-    res.render("home", { 
+    res.render("home", {
       logged_in: true,
       username_and_id: uai,
       cart: req.session.cart
     });
   })
   .catch(() => {
-    res.render("home", { 
+    res.render("home", {
       logged_in: false,
       username_and_id: {
         username: '',
@@ -93,7 +101,7 @@ app.get("/home", (req, res) => {
       cart: req.session.cart
     });
   });
-  
+
 });
 
 app.get("/orders", (req, res) => {
