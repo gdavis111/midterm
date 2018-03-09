@@ -1,9 +1,9 @@
-<nav data="<%=logged_in%>">
+<nav data-logged-in="<%=logged_in%>">
 	<button id="view_orders">orders</button>
 	<button id="view_menu">menu</button>
 	<button id="login_button">login</button>
 	<div>
-		<span id="username"></span>
+		<span id="username" data-id="<%=username_and_id.id%>"><%=username_and_id.username%></span>
 		<button id="logout_button">logout</button>
 	</div>
 </nav>
