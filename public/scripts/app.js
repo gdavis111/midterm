@@ -4,6 +4,11 @@
 // TODO make placeOrder and orders buttons work
 // TODO registration appears to be broken after failed attemt to register using bad phone number...
 
+
+// *-----------------------*
+// | MENU AND CART DISPLAY |
+// *-----------------------*
+
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
   let $category          = $(`<div class="${current_category}"></div>`);
@@ -55,10 +60,6 @@ const renderCart = (cart) => {
     $cart.append(`<span>Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
-    const $order = $('#order');
-
-    // debugger;
-
     $('.cart_item').on('click', removeThisFromCart);
     $('#order').on('click', placeOrder);
   };
@@ -79,6 +80,10 @@ const renderCart = (cart) => {
     printHTML(cart);
   }
 };
+
+// *----------------*
+// | CLICK HANDLERS |
+// *----------------*
 
 function placeOrder(event) {
   event.stopImmediatePropagation();
@@ -166,6 +171,30 @@ function displayQuantityForm() {
 
 }
 
+function logoutButtonHandler() {
+  $.ajax({
+    method: "PUT",
+    url: "/users/logout"
+  })
+  .done(() => window.location.replace("/"));
+}
+
+function loginButtonHander(event, callback) {
+  event.stopImmediatePropagation();
+  displayLoginFormAsync()
+    .then((user_logged_in) => {
+      if(user_logged_in) {
+        callback();
+      }
+    })
+    .catch((message) => {
+      // TODO you can do better than alert...
+      alert(message);
+    });
+}
+
+
+
 function reflectLoginStatus() {
   const logged_in = $('nav').data('logged-in');
 
@@ -173,56 +202,54 @@ function reflectLoginStatus() {
     $('#login_button').hide();
     $('nav').find('#logout_button').closest('div').show();
 
-    $('#logout_button').on('click', function() {
-      $.ajax({
-        method: "PUT",
-        url: "/users/logout"
-      })
-      .done(() => window.location.replace("/"));
-    });
+    $('#logout_button').on('click', logoutButtonHandler);
   }
 
   else {
     $('#login_button').show();
     $('nav').find('#logout_button').closest('div').hide();
 
-    $('#login_button').on('click', function(event) {
-      event.stopImmediatePropagation();
-      displayLoginFormAsync()
-        .then((user_logged_in) => {
-          if(user_logged_in) {
-            reflectLoginStatus();
-          }
-        })
-        .catch((message) => {
-          // TODO you can do better than alert...
-          alert(message);
-        });
-
+    $('#login_button').on('click', (event) => {
+      loginButtonHander.bind(this)(event, reflectLoginStatus);
     });
-    $('#view_orders').on('click', function(event) {
-      event.stopImmediatePropagation();
-      displayLoginFormAsync()
-        .then((user_logged_in) => {
-          if(user_logged_in) {
-            window.location.replace("/orders");
-          }
-        })
-        .catch((message) => {
-          alert(message);
-        });
+
+    $('#view_orders').on('click', (event) => {
+      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
     });
 
   }
 }
 
+function formSubmissionHandler(event, route, exit, resolve, reject) {
+
+  event.preventDefault();
+  $.ajax({
+    method: "PUT",
+    url: route,
+    data: $(this).serialize()
+  })
+  .done((username_and_id) => {
+    exit();
+
+    $('#username')
+    .data('id', username_and_id.id)
+    .text(username_and_id.username);
+
+    $('nav').data('logged-in', true);
+    resolve(true);
+  })
+  .fail((message) => {
+    exit();
+    reject(message);
+  });
+}
+
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
 
-    // TODO write appropriate resolutions and rejections for this guy
-
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
+    const route                = "/users/register";
     const exit                 = () => {
       $form.off('submit');
       $register_section.off('click');
@@ -231,28 +258,32 @@ function displayRegistrationFormAsync() {
     };
 
     $form.on('submit', function(event) {
-      event.preventDefault();
-      $.ajax({
-        method: "PUT",
-        url: "/users/register",
-        data: $form.serialize()
-      })
-      .done((username_and_id) => {
-        exit();
-
-        $('#username')
-        .data('id', username_and_id.id)
-        .text(username_and_id.username);
-
-        $('nav').data('logged-in', true);
-        resolve(true);
-      })
-      .fail((message) => {
-        alert(message);
-      });
+      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    $register_section.on('click', (event) => {
+    // $form.on('submit', function(event) {
+    //   event.preventDefault();
+    //   $.ajax({
+    //     method: "PUT",
+    //     url: "/users/register",
+    //     data: $form.serialize()
+    //   })
+    //   .done((username_and_id) => {
+    //     exit();
+
+    //     $('#username')
+    //     .data('id', username_and_id.id)
+    //     .text(username_and_id.username);
+
+    //     $('nav').data('logged-in', true);
+    //     resolve(true);
+    //   })
+    //   .fail((message) => {
+    //     alert(message);
+    //   });
+    // });
+
+    $register_section.on('click', function(event) {
       event.stopPropagation();
     });
 
@@ -271,6 +302,7 @@ function displayLoginFormAsync() {
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');
     const $registration_link   = $login_section.find('#new');
+    const route                = "/users/login/";
     const exit                 = () => {
       $registration_link.off('click');
       $form.off('submit');
@@ -287,29 +319,10 @@ function displayLoginFormAsync() {
     });
 
     $form.on('submit', function(event) {
-      event.preventDefault();
-      $.ajax({
-        method: "PUT",
-        url: "/users/login",
-        data: $form.serialize()
-      })
-      .done((username_and_id) => {
-        exit();
-
-        $('#username')
-        .data('id', username_and_id.id)
-        .text(username_and_id.username);
-
-        $('nav').data('logged-in', true);
-        resolve(true);
-      })
-      .fail((message) => {
-        exit();
-        reject(message);
-      });
+      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    $login_section.on('click', (event) => {
+    $login_section.on('click', function(event){
       event.stopPropagation();
     });
 
