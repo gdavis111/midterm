@@ -17,7 +17,7 @@ const renderMenu = (menu) => {
       $menu.append($category);
       current_category = product.category;
       $category = $(`<div class="${current_category}"></div>`);
-      $category.append(`<h3>${current_category}</h3>`);
+      $category.append(`<h3 class="foodNameH3">${current_category}</h3>`);
     }
     $product = $(`
       <div class="product">
@@ -46,7 +46,7 @@ const renderCart = (cart) => {
 
       let $product = $(`
         <div class="cart_item" data-id="${product_id}">
-          <small>${qty}</small>
+          <small class="three">${qty}</small>
           <span>${product.name}</span>
           <small>$${price_sum}</small>
         </div>

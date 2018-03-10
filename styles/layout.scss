@@ -145,14 +145,15 @@ article#cart h3 {
 
 #specify_quantity {
     display: none;
-    width: 346px;
+    width: auto;
     height: 70px;
     border: 10px;
     background-color: yellow;
     position: fixed;
     top: 50%;
     bottom: 50%;
-    right: 732px;
+    left: auto;
+    right: auto;
     padding: 20px;
 
 }
@@ -163,25 +164,23 @@ font-size: 15px;
 
 article#specify_quantity .plus {
   font-size: 20px;
-  margin-right: 2%;
+  margin: 2px;
 
 }
 
 article#specify_quantity .minus {
   font-size: 20px;
-  margin-right: 2%;
-
+  margin: 2px;
 }
 
 article#specify_quantity .add {
   font-size: 20px;
-  margin-right: 2%;
-
+  margin: 2px;
 }
 
 article#specify_quantity .cancel {
   font-size: 20px;
-  margin-right: 2%;
+  margin: 2px;
 
 }
 
@@ -267,6 +266,40 @@ article#register {
 .input_register {
   position: relative;
   left: 127px;
+}
+
+h3.foodNameH3 {
+  font-size: 36px;
+  position: relative;
+  left: 166px;
+  z-index: -1;
+}
+
+div.pizza h3 {
+  font-size: 36px;
+  position: relative;
+  left: 166px;
+  z-index: -1;
+}
+
+span.name {
+  /*position: relative;
+  left: 15px;*/
+  font-size: 25px;
+  padding-left: 5px;
+
+}
+
+span.qty {
+ /* position: relative;
+  left: -142px;*/
+  font-size: 25px;
+  padding-right: 5px;
+  float: left;
+}
+
+div.center {
+  width: auto;
 }
 /*#register {
   width: 292px;
