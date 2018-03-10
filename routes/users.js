@@ -15,7 +15,7 @@ const validUsername = (username) => {
 
 module.exports = (DataAccess) => {
 
-  router.put("/register", (req, res) => {
+  router.post("/register", (req, res) => {
 
     const username       = req.body.username;
     const phone_number   = req.body.phone_number;

@@ -1,5 +1,4 @@
-// TODO deal with double-clicking on items being added to cart. This makes the quantity specifier mulitiply
-//
+// TODO registration form disappears on click 
 
 // *-----------------------*
 // | MENU AND CART DISPLAY |
@@ -100,7 +99,15 @@ function placeOrder(event) {
   }
   else {
     // TODO write this function. Talk to Greg about Twilio
-    alert('This is where we do the twilio call and access the database to create an order row in the orders table');
+    //alert('This is where we do the twilio call and access the database to create an order row in the orders table');
+
+    $.ajax({
+      method: "POST",
+      url: "/orders"
+    })
+    .done((cart) => {
+      window.location.replace('/orders');
+    });
   }
 }
 
