@@ -40,58 +40,50 @@ function messageChef(order_obj) { // takes an array of objects and adds quantity
 
 module.exports = (DataAccess) => {
 
-  // function validateOrder(cart) {
-  //   console.log(cart);
-  // }
-
   router.post("/", (req, res) => {
-
-    // TODO verify order
-    // TODO put order into the database
-
-
     let json     = req.session.cart;
 
     try {
-
       const cart   = JSON.parse(json);
       const uai    = req.session.username_and_id;
 
-      // i;m adding a test bug here...
-      //cart[1000] = { json: "{\"id\": \"1000\", \"name\": \"sharty sub\", \"price\": \"12\", \"category_id\": \"2\"}", qty: 2};
-      //console.log(cart);
-
       DataAccess.addOrderPromise(uai, cart)
-      .then((message) => {
-        console.log('here', message);
+      .then((data_cart) => {
+        // console.log(data_cart);
+        messageChef(cart);
+        res.status(201).send({
+          username_and_id: uai,
+          logged_in: true,
+          cart: cart
+        });
       })
       .catch((message) => {
         console.log(message);
+        res.status(400).send(message);
       });
-
-      // DataAccess.verifyPromise(uai)
-      // .then(() => {
-
-      // })
-      // .catch(() => console.log('success'));
-      // DataAccess.addOrder()
-
-
-      //DataAccess.addOrder(cart, user_id);
-      //messageChef(cart);
-      res.send();
-
     }
     catch(err) {
       res.status(400).send('there was a problem sending the order');
-    }
-
-    
+    }   
   });
 
   router.get("/", (req, res) => {
-    // TODO fetch orders from database here
-    res.send('This will be the orders page.');
+    const uai = req.session.username_and_id;
+  
+    DataAccess.getOrdersPromise(uai)
+    .then((result) => {
+      console.log(result);
+      res.render('orders', {
+        username_and_id: uai,
+        logged_in: true,
+        orders: JSON.stringify(result)
+      });
+    })
+    .catch((message) => {
+      res.status(400).send('invalid user data');  
+    });
+    
+
   });
 
   router.post("/response", (req, res) => {

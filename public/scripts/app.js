@@ -80,6 +80,8 @@ const renderCart = (cart) => {
   }
 };
 
+
+
 // *-------------------------*
 // | CLICK AND FORM HANDLERS |
 // *-------------------------*
@@ -98,14 +100,12 @@ function placeOrder(event) {
     });
   }
   else {
-    // TODO write this function. Talk to Greg about Twilio
-    //alert('This is where we do the twilio call and access the database to create an order row in the orders table');
-
     $.ajax({
       method: "POST",
       url: "/orders"
     })
     .done((cart) => {
+      console.log('yaya');
       window.location.replace('/orders');
     });
   }
