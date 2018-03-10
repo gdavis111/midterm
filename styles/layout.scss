@@ -45,7 +45,8 @@ nav {
   width: 100%;
   position: fixed;
   padding: 1% 1% 1% 1%;
-  background-color: wheat;
+  background: white;
+  background: linear-gradient(#FFDD82, white);
   height: 73px ;
 }
 
@@ -145,16 +146,18 @@ article#cart h3 {
 
 #specify_quantity {
     display: none;
-    width: auto;
-    height: 70px;
+    width: 684px;
+    height: 16%;
     border: 10px;
-    background-color: yellow;
+    border: 6px dotted #FFDD82;
+    background: white;
+    background: radial-gradient(circle, white, navajowhite);
     position: fixed;
     top: 50%;
     bottom: 50%;
-    left: auto;
-    right: auto;
+    left: 36%;
     padding: 20px;
+    border-radius: 10px;
 
 }
 
@@ -162,26 +165,36 @@ article#pecific_quantity span {
 font-size: 15px;
 }
 
-article#specify_quantity .plus {
-  font-size: 20px;
+article#specify_quantity .position.plus {
+  font-size: 32px;
   margin: 2px;
-
+  position: fixed;
+  top: 58%;
+  left: 42%;
 }
 
-article#specify_quantity .minus {
-  font-size: 20px;
+article#specify_quantity .position.minus {
+  font-size: 32px;
   margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 44%;
 }
 
-article#specify_quantity .add {
-  font-size: 20px;
+article#specify_quantity .position.add {
+  font-size: 32px;
   margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 47%;
 }
 
-article#specify_quantity .cancel {
-  font-size: 20px;
+article#specify_quantity .position.cancel {
+  font-size: 33px;
   margin: 2px;
-
+  position: fixed;
+  top: 58%;
+  left: 56%;
 }
 
 div.cart_item {
@@ -240,7 +253,7 @@ button#order {
 
 }
 
-#username {
+#specify_quantity.position {
 
 }
 
@@ -283,19 +296,19 @@ div.pizza h3 {
 }
 
 span.name {
-  /*position: relative;
-  left: 15px;*/
-  font-size: 25px;
+  font-size: 45px;
   padding-left: 5px;
+  position: fixed;
+  left: 45%;
 
 }
 
 span.qty {
- /* position: relative;
-  left: -142px;*/
-  font-size: 25px;
-  padding-right: 5px;
-  float: left;
+  font-size: 43px;
+  padding-right: 16px;
+  position: fixed;
+  top: 58%;
+  left: 40%;
 }
 
 div.center {
