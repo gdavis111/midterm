@@ -1,9 +1,9 @@
 // TODO registration form disappears on click 
 // TODO orders button is dodgy
 
-// *-----------------------*
-// | MENU AND CART DISPLAY |
-// *-----------------------*
+// *----------------------------*
+// | DISPLAYING SERVERSIDE DATA |
+// *----------------------------*
 
 const renderMenu = (menu) => {
   let current_category   = menu[0].category;
@@ -31,7 +31,6 @@ const renderMenu = (menu) => {
 
   $menu.append($category);
   $('.product').on('click', displayQuantityForm);
-
 };
 
 const renderCart = (cart) => {
@@ -59,7 +58,7 @@ const renderCart = (cart) => {
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
-    $('#order').on('click', placeOrder);
+    $('#order').on('click', placeOrderHandler);
   };
 
   $cart.empty();
@@ -107,13 +106,25 @@ const renderOrders = () => {
 // | CLICK AND FORM HANDLERS |
 // *-------------------------*
 
-function placeOrder(event) {
+// Cart Related...
+
+function placeOrder() {
+  $.ajax({
+    method: "POST",
+    url: "/orders"
+  })
+  .done(() => {
+    window.location.replace('/orders');
+  });
+}
+
+function placeOrderHandler(event) {
   event.stopImmediatePropagation();
   if(!$('nav').data('logged-in')) {
     displayLoginFormAsync()
     .then((user_logged_in) => {
       if(user_logged_in) {
-        alert('now we will place your order');
+        placeOrder();
       }
     })
     .catch((message) => {
@@ -121,14 +132,7 @@ function placeOrder(event) {
     });
   }
   else {
-    $.ajax({
-      method: "POST",
-      url: "/orders"
-    })
-    .done((cart) => {
-      console.log('yaya');
-      window.location.replace('/orders');
-    });
+    placeOrder();
   }
 }
 
@@ -208,6 +212,7 @@ function displayQuantityForm() {
 
 }
 
+// Authentication Related...
 
 function logoutButtonHandler() {
   $.ajax({
@@ -254,8 +259,6 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
     reject(message);
   });
 }
-
-
 
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
@@ -325,7 +328,6 @@ function displayLoginFormAsync() {
     $(window).on('click', function() {
       exit();
       resolve(false);
-
     });
 
     $login_section.fadeIn();
@@ -337,13 +339,14 @@ function displayLoginFormAsync() {
 // *---------*
 
 function reflectLoginStatus() {
-  const logged_in = $('nav').data('logged-in');
 
-  if(logged_in) {
+  if($('nav').data('logged-in')) {
     $('#login_button').hide();
     $('nav').find('#logout_button').closest('div').show();
 
     $('#logout_button').on('click', logoutButtonHandler);
+    $('#view_orders').on('click', (event) => window.location.replace('/orders'));
+    $('#view_menu').on('click', (event) => window.location.replace('/home'));
   }
 
   else {
@@ -358,6 +361,7 @@ function reflectLoginStatus() {
       loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
     });
 
+    $('#view_menu').on('click', (event) => window.location.replace('/home'));
   }
 }
 
@@ -371,5 +375,10 @@ function goHome() {
     renderCart();
     reflectLoginStatus();
   }); 
+}
+
+function goToOrders() {
+  reflectLoginStatus();
+  renderOrders();
 }
 
