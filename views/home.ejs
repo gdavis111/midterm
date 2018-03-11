@@ -9,6 +9,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/goHome.js"></script>
   </head>
 
   <body>
@@ -27,19 +28,19 @@
     </article>
 
     <article id="login">
-      <form action="/login" method="POST">
-        <span>USERNAME: </span><input type="text" name="USERNAME">
-        <span>PASSWORD: </span><input type="password" name="PASSWORD">
-        <input type="submit" value="LOGIN" class="btn btn-primary">
+      <form action="/users/login" method="POST">
+        <span>username: </span><input type="text" name="username">
+        <span>password: </span><input type="password" name="password">
+        <input type="submit" value="login">
       </form>
       <span id="new">Doesn't have an account? Click me!!!</span>
     </article>
 
     <article id="register">
-      <form action="/register" method="POST" class="login-form">
-        <span>USERNAME: </span><input type="text" name="username">
-        <span>PASSWORD: </span><input type="password" name="password">
-        <span>PHONE NUMBER: </span><input type="text" name="phone_number">
+      <form action="/users/register" method="POST" class="login-form">
+        <span>username: </span><input type="text" name="username">
+        <span>password: </span><input type="password" name="password">
+        <span>phone number: </span><input type="text" name="phone_number">
         <input class="input_register" "btn btn-primary" type="submit" value="REGISTER">
       </form>
     </article>

@@ -1,5 +1,5 @@
-// TODO deal with double-clicking on items being added to cart. This makes the quantity specifier mulitiply
-//
+// TODO registration form disappears on click 
+// TODO orders button is dodgy
 
 // *-----------------------*
 // | MENU AND CART DISPLAY |
@@ -81,6 +81,28 @@ const renderCart = (cart) => {
   }
 };
 
+const renderOrders = () => {
+  const $orders   = $('#orders');
+  const orders    = $orders.data('orders');
+
+  for(let order of orders) {
+
+    let $order = $(`
+      <section>
+        <h3>order #${order.id}</h3>
+      </section>
+    `);
+    for(let item of order.items) {
+      $order.append(`
+        <p><span>${item.quantity}X</span><span>${item.name}</span><span>$${item.price_sum}</span></p>
+      `);
+    }
+    $order.append(`<strong>Total:</strong><strong>$${order.total}</strong>`);
+    $order.append(`<p>${order.status}</p>`);
+    $orders.append($order);
+  }
+};
+
 // *-------------------------*
 // | CLICK AND FORM HANDLERS |
 // *-------------------------*
@@ -99,8 +121,14 @@ function placeOrder(event) {
     });
   }
   else {
-    // TODO write this function. Talk to Greg about Twilio
-    alert('This is where we do the twilio call and access the database to create an order row in the orders table');
+    $.ajax({
+      method: "POST",
+      url: "/orders"
+    })
+    .done((cart) => {
+      console.log('yaya');
+      window.location.replace('/orders');
+    });
   }
 }
 
@@ -333,9 +361,7 @@ function reflectLoginStatus() {
   }
 }
 
-
-$(() => {
-
+function goHome() {
   $.ajax({
     method: "GET",
     url: "/menu"
@@ -344,6 +370,6 @@ $(() => {
     renderMenu(menu);
     renderCart();
     reflectLoginStatus();
-  });
+  }); 
+}
 
-});
