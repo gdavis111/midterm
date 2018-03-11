@@ -14,7 +14,7 @@ const TWILIO_NUMBER = C.TWILIO_NUMBER;
 const TEST_ID = 38;
 
 function formatOrderMessage(id, cart) {
-  let message = `\nORDER ID: ${id}`;
+  let message = `\nORDER ID: ${id}\n`;
   for(let key in cart) {
     let item     = cart[key];
     let details  = JSON.parse(item.json);
@@ -35,7 +35,7 @@ function sendOrderToChef(order_id, cart) { // takes an array of objects and adds
 
 function parseResponse(response) {
   if(!/^\s*\d+\s*-\s*\d+\s*$/.test(response)) {
-    return [];
+    return null;
   }
   else {
     return response
@@ -98,15 +98,13 @@ module.exports = (DataAccess) => {
       const uai    = req.session.username_and_id;
 
       DataAccess.addOrderPromise(uai, cart)
+
       .then((data_cart) => {
-        // console.log(data_cart);
+        req.session.cart = null;
         sendOrderToChef(data_cart[0], cart);
-        res.status(201).send({
-          username_and_id: uai,
-          logged_in: true,
-          cart: cart
-        });
+        res.status(201).send();
       })
+
       .catch((message) => {
         console.log(message);
         res.status(400).send(message);
@@ -134,8 +132,6 @@ module.exports = (DataAccess) => {
   });
 
   router.post("/response", (req, res) => {
-    // console.log(client);
-    // console.log(req.body.Body);
     const response          = req.body.Body;
     const response_parsed   = parseResponse(response);
 
