@@ -9,6 +9,7 @@
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/goHome.js"></script>
   </head>
 
   <body>
@@ -28,24 +29,22 @@
 
     <article id="login">
       <h2>LOG IN</h2>
-      <form action="/login" method="POST">
+      <form action="/users/login" method="POST">
         <span>USERNAME: </span><input type="text" name="USERNAME">
         <span>PASSWORD: </span><input type="password" name="PASSWORD">
         <input type="submit" value="LOGIN" class="btn btn-primary">
       </form>
       <span id="new">Doesn't have an account? Click me!!!</span>
     </article>
-
     <article id="register">
       <h2>SIGN UP</h2>
-      <form action="/register" method="POST" class="login-form">
+      <form action="/users/register" method="POST" class="login-form">
         <span>USERNAME: </span><input type="text" name="username">
         <span>PASSWORD: </span><input type="password" name="password">
         <span>PHONE NUMBER: </span><input type="text" name="phone_number">
         <input class="input_register" "btn btn-primary" type="submit" value="REGISTER">
       </form>
     </article>
-
     <article id="specify_quantity">
       <div class="center">
       <span class="name"></span>
