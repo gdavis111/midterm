@@ -1,4 +1,5 @@
 // TODO registration form disappears on click 
+// TODO orders button is dodgy
 
 // *-----------------------*
 // | MENU AND CART DISPLAY |
@@ -80,7 +81,27 @@ const renderCart = (cart) => {
   }
 };
 
+const renderOrders = () => {
+  const $orders   = $('#orders');
+  const orders    = $orders.data('orders');
 
+  for(let order of orders) {
+
+    let $order = $(`
+      <section>
+        <h3>order #${order.id}</h3>
+      </section>
+    `);
+    for(let item of order.items) {
+      $order.append(`
+        <p><span>${item.quantity}X</span><span>${item.name}</span><span>$${item.price_sum}</span></p>
+      `);
+    }
+    $order.append(`<strong>Total:</strong><strong>$${order.total}</strong>`);
+    $order.append(`<p>${order.status}</p>`);
+    $orders.append($order);
+  }
+};
 
 // *-------------------------*
 // | CLICK AND FORM HANDLERS |
@@ -339,9 +360,7 @@ function reflectLoginStatus() {
   }
 }
 
-
-$(() => {
-
+function goHome() {
   $.ajax({
     method: "GET",
     url: "/menu"
@@ -350,6 +369,6 @@ $(() => {
     renderMenu(menu);
     renderCart();
     reflectLoginStatus();
-  });
+  }); 
+}
 
-});
