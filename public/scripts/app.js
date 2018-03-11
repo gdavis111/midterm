@@ -10,7 +10,7 @@ const renderMenu = (menu) => {
   let $category          = $(`<div class="${current_category}"></div>`);
   const $menu            = $('#menu');
   $menu.empty();
-  $category.append(`<h3>${current_category}</h3>`);
+  $category.append(`<h3 class="foodNameH3">${current_category}</h3>`);
 
   for(let product of menu) {
     if(current_category != product.category) {
@@ -47,14 +47,14 @@ const renderCart = (cart) => {
         <div class="cart_item" data-id="${product_id}">
           <small class="three">${qty}</small>
           <span>${product.name}</span>
-          <small>$${price_sum}</small>
+          <small class="price_sum">$${price_sum}</small>
         </div>
       `);
 
       $cart.append($product);
     }
 
-    $cart.append(`<span class="total">Total $${total}</span>`);
+    $cart.append(`<span class="total">TOTAL       $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
@@ -222,11 +222,11 @@ function logoutButtonHandler() {
   .done(() => window.location.replace("/"));
 }
 
-function loginButtonHander(event, callback) {
-  event.stopImmediatePropagation();
+function loginHandler(event, callback=null) {
+  //event.stopImmediatePropagation();
   displayLoginFormAsync()
     .then((user_logged_in) => {
-      if(user_logged_in) {
+      if(user_logged_in && callback) {
         callback();
       }
     })
@@ -246,12 +246,11 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
   })
   .done((username_and_id) => {
     exit();
-
     $('#username')
-    .data('id', username_and_id.id)
-    .text(username_and_id.username);
-
+      .data('id', username_and_id.id)
+      .text(username_and_id.username);
     $('nav').data('logged-in', true);
+    reflectLoginStatus();
     resolve(true);
   })
   .fail((message) => {
@@ -260,43 +259,62 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
   });
 }
 
+function exitForm($section, $form, jElements, clickAway) {
+  $form.off('submit');
+  for(let j of jElements) {
+    j.off('click');
+  }
+  window.removeEventListener('click', clickAway, true);
+  $section.hide();
+}
+
+function clickAwayLogin(event) {
+  if(!$.contains(document.getElementById('login'), event.target)) {
+    event.stopPropagation();
+    const $login_section       = $('#login');
+    const $form                = $login_section.find('form');
+    const $registration_link   = $login_section.find('#new');
+    exitForm($login_section, $form, [$registration_link], clickAwayLogin);
+    return false;
+  }
+}
+
+function clickAwayRegister(event) {
+  if(!$.contains(document.getElementById('register'), event.target)) {
+    event.stopPropagation();
+    const $register_section       = $('#register');
+    const $form                = $register_section.find('form');
+    exitForm($register_section, $form, [], clickAwayRegister);
+    return false;
+  }
+}
+
 function displayRegistrationFormAsync() {
   return new Promise(function(resolve, reject) {
 
-    function windowClick() {
-      exit();
-      resolve(false);
-    }
-
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
-    const route                = "/users/register";
+    const route                = "/users/register"; 
     const exit                 = () => {
       $form.off('submit');
-      $register_section.off('click');
-      window.removeEventListener('click', windowClick);
+      window.removeEventListener('click', clickAwayRegister, true);
       $register_section.hide();
     };
 
     $form.on('submit', function(event) {
       formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
-
-    $register_section.on('click', function(event) {
-      event.stopPropagation();
-    });
-    window.addEventListener('click', windowClick, true);
-
-
+    
+    window.addEventListener('click', clickAwayRegister, true);
     $register_section.fadeIn();
 
   });
 }
 
+
+
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
-
-    // debugger;
 
     const $login_section       = $('#login');
     const $form                = $login_section.find('form');
@@ -305,31 +323,21 @@ function displayLoginFormAsync() {
     const exit                 = () => {
       $registration_link.off('click');
       $form.off('submit');
-      $login_section.off('click');
-      $('window').off('click');
+      window.removeEventListener('click', clickAwayLogin, true);
       $login_section.hide();
     };
 
     $registration_link.on('click', function(event) {
-      event.stopImmediatePropagation();
-      exit();
-      displayRegistrationFormAsync()
-      .then((status) => resolve(status));
+      event.stopPropagation();
+      exitForm($login_section, $form, [$registration_link], clickAwayLogin);
+      return displayRegistrationFormAsync();
     });
 
     $form.on('submit', function(event) {
       formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
 
-    $login_section.on('click', function(event){
-      event.stopPropagation();
-    });
-
-    $(window).on('click', function() {
-      exit();
-      resolve(false);
-    });
-
+    window.addEventListener('click', clickAwayLogin, true);
     $login_section.fadeIn();
   });
 }
@@ -339,29 +347,38 @@ function displayLoginFormAsync() {
 // *---------*
 
 function reflectLoginStatus() {
+  const $login_button = $('#login_button');
+  const $logout_button = $('#logout_button');
+  const $view_menu = $('#view_menu');
+  const $view_orders = $('#view_orders');
+
+  $login_button.off('click');
+  $logout_button.off('click');
+  $view_menu.off('click');
+  $view_orders.off('click');
 
   if($('nav').data('logged-in')) {
-    $('#login_button').hide();
-    $('nav').find('#logout_button').closest('div').show();
+    $login_button.hide();
+    $logout_button.closest('div').show();
 
-    $('#logout_button').on('click', logoutButtonHandler);
-    $('#view_orders').on('click', (event) => window.location.replace('/orders'));
-    $('#view_menu').on('click', (event) => window.location.replace('/home'));
+    $logout_button.on('click', logoutButtonHandler);
+    $view_orders.on('click', (event) => window.location.replace('/orders'));
+    $view_menu.on('click', (event) => window.location.replace('/home'));
   }
 
   else {
-    $('#login_button').show();
-    $('nav').find('#logout_button').closest('div').hide();
+    $login_button.show();
+    $logout_button.closest('div').hide();
 
-    $('#login_button').on('click', (event) => {
-      loginButtonHander.bind(this)(event, reflectLoginStatus);
+    $login_button.on('click', (event) => {
+      loginHandler.bind(this)(event);
     });
 
-    $('#view_orders').on('click', (event) => {
-      loginButtonHander.bind(this)(event, () => window.location.replace('/orders'));
+    $view_orders.on('click', (event) => {
+      loginHandler.bind(this)(event, () => window.location.replace('/orders'));
     });
 
-    $('#view_menu').on('click', (event) => window.location.replace('/home'));
+    $view_menu.on('click', (event) => window.location.replace('/home'));
   }
 }
 
