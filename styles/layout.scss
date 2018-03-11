@@ -26,7 +26,7 @@ main {
   width: auto;
   padding-top: 100px;
   height: 1000%;
-  background-color: white;
+  /*background-color: ;*/
   margin-right: 30%;
   margin-left: 30%
 }
@@ -48,7 +48,7 @@ display: none;
 }
 
 nav {
-background-color: red;
+background-color: #ff6600;
 padding: 20px;
 position: fixed;
 width: 100%;
@@ -68,14 +68,19 @@ nav #login_button {
 
 nav div {
   display: none;
+  float: right;
+  width: 13%;
 }
 
 nav div #username {
 /*can't se it yet*/
+font-size: 149%;
+
 }
 
-nav div #logout_button {
+nav #logout_button {
 /*cant see it yet*/
+margin-left: 24%;
 }
 
 main #menu {
@@ -335,6 +340,7 @@ float: right;
     right: 28%;
     height: 29%;
     padding: 2%;
+    border-radius: 10px;
 }
 
 .cart-login-register #login form {
@@ -365,7 +371,7 @@ font-size: 110%;
 
 .cart-login-register #register {
 /*username password phone number register*/
-    background-color: gold;
+    background-color: #A45209;
     text-align: center;
     position: fixed;
     top: 15%;
@@ -373,6 +379,7 @@ font-size: 110%;
     height: 38%;
     width: 45%;
     padding: 2%;
+    border-radius: 10px;
 }
 
 .cart-login-register #register .login-form {
@@ -458,3 +465,16 @@ position: fixed;
     bottom: 44%;
     right: 41%;
   }
+
+.orderDisplay {
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.orderDisplay p span {
+    margin: 2%;
+}
+
+.orderDisplay strong {
+    margin: 1%;
+}

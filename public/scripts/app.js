@@ -1,4 +1,4 @@
-// TODO registration form disappears on click 
+// TODO registration form disappears on click
 // TODO orders button is dodgy
 
 // *----------------------------*
@@ -87,7 +87,7 @@ const renderOrders = () => {
   for(let order of orders) {
 
     let $order = $(`
-      <section>
+      <section class="orderDisplay">
         <h3>order #${order.id}</h3>
       </section>
     `);
@@ -294,7 +294,7 @@ function displayRegistrationFormAsync() {
 
     const $register_section    = $('#register');
     const $form                = $register_section.find('form');
-    const route                = "/users/register"; 
+    const route                = "/users/register";
     const exit                 = () => {
       $form.off('submit');
       window.removeEventListener('click', clickAwayRegister, true);
@@ -304,7 +304,7 @@ function displayRegistrationFormAsync() {
     $form.on('submit', function(event) {
       formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
     });
-    
+
     window.addEventListener('click', clickAwayRegister, true);
     $register_section.fadeIn();
 
@@ -391,7 +391,7 @@ function goHome() {
     renderMenu(menu);
     renderCart();
     reflectLoginStatus();
-  }); 
+  });
 }
 
 function goToOrders() {
