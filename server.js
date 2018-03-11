@@ -46,11 +46,6 @@ app.use(express.static("public"));
 // | ROUTES |
 // *--------*
 
-
-
-// *--------*
-// | TWILIO |
-// *--------*
 const userRoutes = require("./routes/users.js")(DataAccess);
 const orderRoutes = require("./routes/orders.js")(DataAccess);
 app.use("/users", userRoutes);
@@ -106,10 +101,15 @@ app.get("/home", (req, res) => {
 
 app.post("/cart/:id", (req, res) => {
   let cart;
+
+  // console.log(req.session);
+
   if(!req.session.cart) {
+    // console.log('no session cart');
     cart = {};
   }
   else {
+    // console.log('there is a session cart');
     cart = JSON.parse(req.session.cart);
   }
 

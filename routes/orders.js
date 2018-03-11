@@ -4,11 +4,14 @@
 const express       = require('express');
 const router        = express.Router();
 const secretToken   = require('./secretToken');
+const C             = require('../lib/constants.js');
 const twilio        = require('twilio');
 const client        = new twilio(secretToken.accountSid, secretToken.authToken);
 
-const CHEF_NUMBER = '+15194369581';
-const TWILIO_NUMBER = '+15146127315';
+const CHEF_NUMBER = C.CHEF_NUMBER;
+const TWILIO_NUMBER = C.TWILIO_NUMBER;
+
+const TEST_ID = 38;
 
 function formatOrderMessage(id, cart) {
   let message = `\nORDER ID: ${id}`;
@@ -61,11 +64,8 @@ function sendErrorToChef(id_invalid=false) {
 }
 
 function sendStatusToCustomer(minutes, customer_phone_number) {
-  let message = `
-  Order recieved. Ready for pickup in ${minutes} minutes.`;
-
   client.messages.create({
-    body: message,
+    body: `\n${C.MESSAGE_TO_CUSTOMER(minutes)}`,
     to: customer_phone_number, 
     from: TWILIO_NUMBER
   });
@@ -81,20 +81,13 @@ function sendStatusToCustomer(minutes, customer_phone_number) {
 module.exports = (DataAccess) => {
 
   function applyChefsResponse([id, minutes]) {
-
-    // TODO update database
-    // TODO fetch user phone number from db using user id
-    // TODO send text to client
-
-    DataAccess.updateOrderStatus(id, minutes)
+    DataAccess.updateOrderStatusPromise(id, minutes)
     .then((customer_phone_number) => {
       sendStatusToCustomer(minutes, customer_phone_number);
     })
     .catch(() => {
       sendErrorToChef(true);
-    });
-
-    
+    }); 
   }
 
   router.post("/", (req, res) => {
@@ -154,8 +147,6 @@ module.exports = (DataAccess) => {
       sendErrorToChef();
       res.status(400).send();
     }
-
-    //applyChefsResponse(req.body.Body, '+14389905125');
   });
 
   return router;
