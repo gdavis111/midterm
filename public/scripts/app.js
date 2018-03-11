@@ -17,7 +17,7 @@ const renderMenu = (menu) => {
       $menu.append($category);
       current_category = product.category;
       $category = $(`<div class="${current_category}"></div>`);
-      $category.append(`<h3>${current_category}</h3>`);
+      $category.append(`<h3 class="foodNameH3">${current_category}</h3>`);
     }
     $product = $(`
       <div class="product">
@@ -46,7 +46,7 @@ const renderCart = (cart) => {
 
       let $product = $(`
         <div class="cart_item" data-id="${product_id}">
-          <small>${qty}</small>
+          <small class="three">${qty}</small>
           <span>${product.name}</span>
           <small>$${price_sum}</small>
         </div>
@@ -55,7 +55,7 @@ const renderCart = (cart) => {
       $cart.append($product);
     }
 
-    $cart.append(`<span>Total $${total}</span>`);
+    $cart.append(`<span class="total">Total $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
@@ -73,7 +73,7 @@ const renderCart = (cart) => {
       printHTML(returning_cart);
     }
     else {
-      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');      
+      $cart.append('<p>Your cart is empty. Click on the menu items to add to your cart.');
     }
   }
   else {
@@ -282,8 +282,8 @@ function displayRegistrationFormAsync() {
     $register_section.on('click', function(event) {
       event.stopPropagation();
     });
-
     window.addEventListener('click', windowClick, true);
+
 
     $register_section.fadeIn();
 
@@ -325,6 +325,7 @@ function displayLoginFormAsync() {
     $(window).on('click', function() {
       exit();
       resolve(false);
+
     });
 
     $login_section.fadeIn();

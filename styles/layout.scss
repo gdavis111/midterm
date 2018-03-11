@@ -1,26 +1,32 @@
 body {
-  background-image:url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
+  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-
-  h1 {
-    color: #244751;
-  }
+  background-size: cover;
 }
+
+body h1 {
+  color: #244751;
+}
+
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
 body {
   margin: 0;
   color: #244751;
   background-color: #eee;
 }
+
 * {
   font-family: 'Roboto Condensed', sans-serif;
 }
+
 main {
   width: 450px;
   margin: 0 auto;
@@ -39,7 +45,9 @@ nav {
   width: 100%;
   position: fixed;
   padding: 1% 1% 1% 1%;
-  background-color: black;
+  background: white;
+  background: linear-gradient(#FFDD82, white);
+  height: 73px ;
 }
 
 section.cart-login-register {
@@ -60,6 +68,26 @@ button#view_menu {
 button#login_button {
   display: block;
   float: right;
+}
+
+button#logout_button {
+  display: block;
+  float: right;
+  position: relative;
+  right: -75px;
+  top: -33px;
+}
+
+#username {
+  float: right;
+  color: black;
+  padding-left: 8px;
+  padding-right: 6px;
+  float: right;
+  position: relative;
+  top: -34px;
+  right: 47%;
+  font-size: 30px;
 }
 
 main {
@@ -118,15 +146,18 @@ article#cart h3 {
 
 #specify_quantity {
     display: none;
-    width: 346px;
-    height: 70px;
+    width: 684px;
+    height: 16%;
     border: 10px;
-    background-color: yellow;
+    border: 6px dotted #FFDD82;
+    background: white;
+    background: radial-gradient(circle, white, navajowhite);
     position: fixed;
     top: 50%;
     bottom: 50%;
-    right: 732px;
+    left: 36%;
     padding: 20px;
+    border-radius: 10px;
 
 }
 
@@ -134,28 +165,36 @@ article#pecific_quantity span {
 font-size: 15px;
 }
 
-article#specify_quantity .plus {
-  font-size: 20px;
-  margin-right: 2%;
-
+article#specify_quantity .position.plus {
+  font-size: 32px;
+  margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 42%;
 }
 
-article#specify_quantity .minus {
-  font-size: 20px;
-  margin-right: 2%;
-
+article#specify_quantity .position.minus {
+  font-size: 32px;
+  margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 44%;
 }
 
-article#specify_quantity .add {
-  font-size: 20px;
-  margin-right: 2%;
-
+article#specify_quantity .position.add {
+  font-size: 32px;
+  margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 47%;
 }
 
-article#specify_quantity .cancel {
-  font-size: 20px;
-  margin-right: 2%;
-
+article#specify_quantity .position.cancel {
+  font-size: 33px;
+  margin: 2px;
+  position: fixed;
+  top: 58%;
+  left: 56%;
 }
 
 div.cart_item {
@@ -214,6 +253,67 @@ button#order {
 
 }
 
+// #specify_quantity.position {
+
+// }
+
+// article#login {
+//   display: none;
+//   position: fixed;
+//   top: 5px;
+//   font-size: 17px;
+//   right: 25%;
+//   left: 35%;
+// }
+
+// article#register {
+//   display: none;
+//   position: fixed;
+//   top: 5px;
+//   font-size: 17px;
+//   right: 25%;
+//   left: 35%;
+//   width: 646px;
+// }
+
+// .input_register {
+//   position: relative;
+//   left: 127px;
+// }
+
+// h3.foodNameH3 {
+//   font-size: 36px;
+//   position: relative;
+//   left: 166px;
+//   z-index: -1;
+// }
+
+// div.pizza h3 {
+//   font-size: 36px;
+//   position: relative;
+//   left: 166px;
+//   z-index: -1;
+// }
+
+// span.name {
+//   font-size: 45px;
+//   padding-left: 5px;
+//   position: fixed;
+//   left: 45%;
+
+// }
+
+// span.qty {
+//   font-size: 43px;
+//   padding-right: 16px;
+//   position: fixed;
+//   top: 58%;
+//   left: 40%;
+// }
+
+// div.center {
+//   width: auto;
+// }
 
 /*#register {
   width: 292px;

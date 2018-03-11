@@ -22,7 +22,7 @@
 
 
     </main>
-    
+
   <section class="cart-login-register">
     <article id="cart" data-json="<%=cart%>">
     </article>
@@ -33,7 +33,7 @@
         <span>password: </span><input type="password" name="password">
         <input type="submit" value="login">
       </form>
-      <span id="new">don't have an account?</span>
+      <span id="new">Doesn't have an account? Click me!!!</span>
     </article>
 
     <article id="register">
@@ -41,17 +41,19 @@
         <span>username: </span><input type="text" name="username">
         <span>password: </span><input type="password" name="password">
         <span>phone number: </span><input type="text" name="phone_number">
-        <input type="submit" value="register">
+        <input class="input_register" "btn btn-primary" type="submit" value="REGISTER">
       </form>
     </article>
 
     <article id="specify_quantity">
+      <div class="center">
       <span class="name"></span>
-      <span class="qty"></span>
-      <button class="plus">+</button>
-      <button class="minus">-</button>
-      <button class="add">Add To Cart</button>
-      <button class="cancel">Cancel</button>
+      <span class="position qty"></span>
+      <button class="position plus">+</button>
+      <button class="position minus">-</button>
+      <button class="position add">Add To Cart</button>
+      <button class="position cancel">Cancel</button>
+    </div>
     </article>
   </section>
   </body>
