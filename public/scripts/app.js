@@ -10,7 +10,7 @@ const renderMenu = (menu) => {
   let $category          = $(`<div class="${current_category}"></div>`);
   const $menu            = $('#menu');
   $menu.empty();
-  $category.append(`<h3>${current_category}</h3>`);
+  $category.append(`<h3 class="foodNameH3">${current_category}</h3>`);
 
   for(let product of menu) {
     if(current_category != product.category) {
@@ -48,14 +48,14 @@ const renderCart = (cart) => {
         <div class="cart_item" data-id="${product_id}">
           <small class="three">${qty}</small>
           <span>${product.name}</span>
-          <small>$${price_sum}</small>
+          <small class="price_sum">$${price_sum}</small>
         </div>
       `);
 
       $cart.append($product);
     }
 
-    $cart.append(`<span class="total">Total $${total}</span>`);
+    $cart.append(`<span class="total">TOTAL       $${total}</span>`);
     $cart.append('<button id="order">Place Order</button>');
 
     $('.cart_item').on('click', removeThisFromCart);
