@@ -1,14 +1,6 @@
-# Node Skeleton
+# Ahpnhayme
 
-## Project Setup
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
 
 ## Getting Started
 
@@ -23,7 +15,30 @@
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
+## Final Product
+
+!["Screenshot of title page"]
+!["Screenshot of menu page"]
+!["Screenshot of login pop-up"]
+!["Screenshot of register pop-up"]
+!["Screenshot of orders/status page"]
+
 ## Dependencies
 
 - Node 5.10.x or above
 - NPM 3.8.x or above
+
+- bcrypt
+- body-parser
+- cookie-session
+- dotenv
+- ejs
+- express
+- knex
+- knex-logger
+- morgan
+- node-sass-middleware
+- pg
+- twilio
+
+## DevDependencies
