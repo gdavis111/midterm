@@ -52,16 +52,17 @@ body {
  nav div {
      display: none;
      float: right;
-     width: 13%;
+     width: 16%;
 }
  nav div #username {
     /*can't se it yet*/
      font-size: 149%;
      color: white;
+     padding-right: 40%;
 }
  nav #logout_button {
     /*cant see it yet*/
-     margin-left: 24%;
+     /*margin-left: 24%;*/
 }
  main #menu {
     /*pizza to drink only*/
