@@ -15,6 +15,8 @@ const validUsername = (username) => {
 
 module.exports = (DataAccess) => {
 
+  // A PUT request to /users/register is used for 
+  // registration
   router.put("/register", (req, res) => {
 
     const username       = req.body.username;
@@ -43,6 +45,7 @@ module.exports = (DataAccess) => {
     }
   });
 
+  // A PUT request to /users/login is used for logging in
   router.put("/login", (req, res) => {
     const username = req.body.username;
 
@@ -75,6 +78,7 @@ module.exports = (DataAccess) => {
     }
   });
 
+  // A PUT to /users/logout is used for loggin out
   router.put("/logout", (req, res) => {
     req.session = null;
     res.status(200).send();
