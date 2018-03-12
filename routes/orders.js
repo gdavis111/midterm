@@ -1,5 +1,3 @@
-//TODO make sure message to customer is working
-
 /*jslint node: true */
 "use strict";
 
@@ -13,8 +11,8 @@ const client        = new twilio(secretToken.accountSid, secretToken.authToken);
 const CHEF_NUMBER = C.CHEF_NUMBER;
 const TWILIO_NUMBER = C.TWILIO_NUMBER;
 
-const TEST_ID = 38;
-
+// The message formatted with the following function 
+// is sent to the chef when an order comes through
 function formatOrderMessage(id, cart) {
   let message = `\nORDER ID: ${id}\n`;
   for(let key in cart) {
@@ -27,7 +25,8 @@ function formatOrderMessage(id, cart) {
   return message;
 }
 
-function sendOrderToChef(order_id, cart) { // takes an array of objects and adds quantity and id of each to a message to the chef
+// Send order to chef
+function sendOrderToChef(order_id, cart) { 
   client.messages.create({
       body: formatOrderMessage(order_id, cart),
       to: CHEF_NUMBER,
@@ -35,6 +34,8 @@ function sendOrderToChef(order_id, cart) { // takes an array of objects and adds
   });
 }
 
+// This function parses the response of the chef 
+// and simultaneously verifies that it's been formatted correctly
 function parseResponse(response) {
   if(!/^\s*\d+\s*-\s*\d+\s*$/.test(response)) {
     return null;
@@ -46,6 +47,9 @@ function parseResponse(response) {
   }
 }
 
+// The following function sends an error message to
+// the chef if his response has been formatted incorrectly
+// or if the order id he provided is invalid
 function sendErrorToChef(id_invalid=false) {
   let message = `
   Your response was not formatted correctly. 
@@ -65,6 +69,7 @@ function sendErrorToChef(id_invalid=false) {
 
 }
 
+// This function notifies the customer when the chef responds
 function sendStatusToCustomer(minutes, customer_phone_number) {
   client.messages.create({
     body: `\n${C.MESSAGE_TO_CUSTOMER(minutes)}`,
@@ -73,19 +78,13 @@ function sendStatusToCustomer(minutes, customer_phone_number) {
   });
 }
 
-
-// console.log();
-// const response_parsed = parseResponse(process.argv[2]);
-// applyChefsResponse(response_parsed);
-
-
-
 module.exports = (DataAccess) => {
 
+  // This function is called when a response 
+  // from the chef has been verified
   function applyChefsResponse([id, minutes]) {
     DataAccess.updateOrderStatusPromise(id, minutes)
     .then((customer_phone_number) => {
-      console.log(customer_phone_number);
       sendStatusToCustomer(minutes, customer_phone_number);
     })
     .catch(() => {
@@ -93,6 +92,7 @@ module.exports = (DataAccess) => {
     }); 
   }
 
+  // A POST request to /orders is used to create a new order
   router.post("/", (req, res) => {
     let json     = req.session.cart;
 
@@ -109,7 +109,6 @@ module.exports = (DataAccess) => {
       })
 
       .catch((message) => {
-        console.log(message);
         res.status(400).send(message);
       });
     }
@@ -118,22 +117,27 @@ module.exports = (DataAccess) => {
     }   
   });
 
+  // A GET request to orders is used for displaying the orders page
   router.get("/", (req, res) => {
     const uai = req.session.username_and_id;
+
     DataAccess.getOrdersPromise(uai)
+
     .then((result) => {
-      // console.log(result);
       res.render('orders', {
         username_and_id: uai,
         logged_in: true,
         orders: JSON.stringify(result)
       });
     })
+
     .catch((message) => {
       res.status(400).send('invalid user data');  
     });
   });
 
+  // This route handles the chef's response which comes the
+  // chef's cellphone via twilio
   router.post("/response", (req, res) => {
     const response          = req.body.Body;
     const response_parsed   = parseResponse(response);

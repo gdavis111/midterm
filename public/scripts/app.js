@@ -88,7 +88,7 @@ function renderOrders() {
 
     let $order = $(`
       <section class="orderDisplay">
-        <h3>Order #${order.id}</h3>
+        <h3>Order ID: ${order.id}</h3>
       </section>
     `);
     for(let item of order.items) {
@@ -145,7 +145,7 @@ function removeThisFromCart() {
 
 function addToCart(product_json, qty) {
   $.ajax({
-    method: "POST",
+    method: "PUT",
     url: `/cart/${JSON.parse(product_json).id}`,
     data: {
       json: product_json,
@@ -323,7 +323,8 @@ function displayLoginFormAsync() {
     $registration_link.on('click', function(event) {
       event.stopPropagation();
       exitForm($login_section, $form, [$registration_link], clickAwayLogin);
-      return displayRegistrationFormAsync();
+      displayRegistrationFormAsync()
+      .then((result) => resolve(result));
     });
 
     $form.on('submit', function(event) {

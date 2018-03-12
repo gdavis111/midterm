@@ -51,6 +51,8 @@ const orderRoutes = require("./routes/orders.js")(DataAccess);
 app.use("/users", userRoutes);
 app.use("/orders", orderRoutes);
 
+// If the user has a session going, we send them
+// straight to the menu. Otherwise, we send them to the title page
 app.get("/", (req, res) => {
   if(req.session) {
     if(req.session.isPopulated) {
@@ -65,16 +67,16 @@ app.get("/", (req, res) => {
   }
 });
 
-app.get("/testing", (req, res) => {
-  res.render("testing");
-});
-
+// Get the menu and put it in JSON format
 app.get("/menu", (req, res) => {
   DataAccess.applyToMenu((menu) => {
     res.json(menu);
   });
 });
 
+// Verify potential returning visitor. In either case
+// their cart is preserved. This allows non-registered users
+// to fill and preserve their carts 
 app.get("/home", (req, res) => {
 
   const uai = req.session.username_and_id;
@@ -99,17 +101,18 @@ app.get("/home", (req, res) => {
 
 });
 
-app.post("/cart/:id", (req, res) => {
+// A PUT to /cart/:id is used to add an item to the cart.
+// I use PUT not POST here because this request is idempotent:
+// in our application if a user attempts to add an item to their cart
+// that is already in their cart in some quantity, the original instance
+// is replaced
+app.put("/cart/:id", (req, res) => {
   let cart;
 
-  // console.log(req.session);
-
   if(!req.session.cart) {
-    // console.log('no session cart');
     cart = {};
   }
   else {
-    // console.log('there is a session cart');
     cart = JSON.parse(req.session.cart);
   }
 
@@ -122,6 +125,7 @@ app.post("/cart/:id", (req, res) => {
   res.json(req.session.cart);
 });
 
+// And a DELETE is used to remove an item from their cart.
 app.delete("/cart/:id", (req, res) => {
   let cart;
   if(!req.session.cart) {
@@ -139,3 +143,7 @@ app.delete("/cart/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log("Excellent food ordering app listening on port " + PORT);
 });
+
+
+
+
