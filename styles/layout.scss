@@ -52,13 +52,15 @@ body {
  nav div {
      display: none;
      float: right;
-     width: 16%;
+     width: 7%;
 }
  nav div #username {
     /*can't se it yet*/
      font-size: 149%;
      color: white;
-     padding-right: 40%;
+    position: fixed;
+    left: 13%;
+    top: 3%;
 }
  nav #logout_button {
     /*cant see it yet*/
