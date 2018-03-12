@@ -1,29 +1,32 @@
-# Node Skeleton
+# Ahpnhayme
 
-## Project Setup
+Ahpnhayme is a restaurant order app that will allow users to register/login to and select whatever menu items they wish to order.  Once the order has been placed by a signed-in user, the app directs them to the orders page where they can see the details of their order along with an order status.  Meanwhile, when the order is placed a text message will be directed to the restaurant's chef who will be given an order id and all of the details.  The chef will then respond to that message with the order id followed by the estimated time until the food will be ready for pickup.  The site is updated with this information and provides a countdown in the status.  The user will then receive a message via text to the phone number they provided on registration with a formatted message telling them how long it will be until their food is ready.  The text messages are programmed through the use of the Twilio API.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+## Final Product
 
-## Getting Started
-
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+!["Screenshot of title page"](https://github.com/hlowso/midterm/blob/master/docs/title.png?raw=true)
+!["Screenshot of menu page"](https://github.com/hlowso/midterm/blob/master/docs/menu.png?raw=true)
+!["Screenshot of login pop-up"](https://github.com/hlowso/midterm/blob/master/docs/login.png?raw=true)
+!["Screenshot of register pop-up"](https://github.com/hlowso/midterm/blob/master/docs/register.png?raw=true)
+!["Screenshot of orders/status page"](https://github.com/hlowso/midterm/blob/master/docs/orders.png?raw=true)
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+- node
+- npm
+- bcrypt
+- body-parser
+- cookie-session
+- dotenv
+- ejs
+- express
+- knex
+- knex-logger
+- morgan
+- node-sass-middleware
+- pg
+- twilio
+
+## DevDependencies
+
+- nodemon
