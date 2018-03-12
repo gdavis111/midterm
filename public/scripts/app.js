@@ -1,5 +1,3 @@
-// TODO registration form disappears on click 
-// TODO orders button is dodgy
 
 // *----------------------------*
 // | DISPLAYING SERVERSIDE DATA |
@@ -80,9 +78,11 @@ const renderCart = (cart) => {
   }
 };
 
-const renderOrders = () => {
+function renderOrders() {
   const $orders   = $('#orders');
   const orders    = $orders.data('orders');
+
+  $orders.empty();
 
   for(let order of orders) {
 
@@ -100,7 +100,7 @@ const renderOrders = () => {
     $order.append(`<p>${order.status}</p>`);
     $orders.append($order);
   }
-};
+}
 
 // *-------------------------*
 // | CLICK AND FORM HANDLERS |
@@ -126,9 +126,6 @@ function placeOrderHandler(event) {
       if(user_logged_in) {
         placeOrder();
       }
-    })
-    .catch((message) => {
-      alert(message);
     });
   }
   else {
@@ -223,18 +220,11 @@ function logoutButtonHandler() {
 }
 
 function loginHandler(event, callback=null) {
-  //event.stopImmediatePropagation();
-
   displayLoginFormAsync()
     .then((user_logged_in) => {
       if(user_logged_in && callback) {
         callback();
       }
-    })
-    .catch((message) => {
-
-      // TODO you can do better than alert...
-      alert(message);
     });
 }
 
@@ -260,7 +250,7 @@ function formSubmissionHandler(event, route, exit, resolve) {
       if($(elem).closest('article').css('display') !== 'none') {
         $(elem).html(err.responseText);
       }
-    })
+    });
   });
 }
 
@@ -400,5 +390,6 @@ function goHome() {
 function goToOrders() {
   reflectLoginStatus();
   renderOrders();
+  setInterval(function() { window.location.replace('/orders'); }, 60000);
 }
 
