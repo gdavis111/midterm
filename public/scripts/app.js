@@ -332,6 +332,10 @@ function displayLoginFormAsync() {
     });
 
     window.addEventListener('click', clickAwayLogin, true);
+    $theRest = $('body').not($login_section);
+
+    debugger;
+
     $login_section.fadeIn();
   });
 }
