@@ -331,11 +331,7 @@ function displayLoginFormAsync() {
       formSubmissionHandler.bind(this)(event, route, exit, resolve);
     });
 
-    window.addEventListener('click', clickAwayLogin, true);
-    $theRest = $('body').not($login_section);
-
-    debugger;
-
+    window.addEventListener('click', clickAwayLogin, true); 
     $login_section.fadeIn();
   });
 }
