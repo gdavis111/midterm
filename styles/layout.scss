@@ -1,512 +1,437 @@
 body {
-  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+     background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/background-menu-restaurant-7.jpg");
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
 }
-
-body h1 {
-  color: #244751;
+ body h1 {
+     color: #244751;
 }
-
-html {
-  box-sizing: border-box;
+ html {
+     box-sizing: border-box;
 }
-
-*, *:before, *:after {
-  box-sizing: inherit;
+ *, *:before, *:after {
+     box-sizing: inherit;
 }
-
-
-* {
-  font-family: 'Roboto Condensed', sans-serif;
+ * {
+     font-family: 'Roboto Condensed', sans-serif;
 }
-
-main {
-  width: auto;
-  padding-top: 100px;
-  height: 1000%;
-  /*background-color: ;*/
-  margin-right: 30%;
-  margin-left: 30%
+ main {
+     width: auto;
+     padding-top: 100px;
+     height: 1000%;
+     background: linear-gradient(to bottom, #FFCC33, #A45209);
+     margin-right: 30%;
+     margin-left: 30%
 }
-
-#login {
-display: none;
+ #login {
+     display: none;
 }
-
-#register {
-display: none;
+ #register {
+     display: none;
 }
-
-#login_button {
-display: none;
+ #login_button {
+     display: none;
 }
-
-#specify_quantity {
-  display: none;
+ #specify_quantity {
+     display: none;
 }
-
-nav {
-background-color: #ff6600;
-padding: 20px;
-position: fixed;
-width: 100%;
+ nav {
+     background-color: #533419;
+     padding: 20px;
+     position: fixed;
+     width: 100%;
 }
-
-nav #view_orders {
-
+ nav #view_orders {
 }
-
-nav #view_menu {
-
+ nav #view_menu {
 }
-
-nav #login_button {
-  float: right;
+ nav #login_button {
+     float: right;
 }
-
-nav div {
-  display: none;
-  float: right;
-  width: 13%;
+ nav div {
+     display: none;
+     float: right;
+     width: 13%;
 }
-
-nav div #username {
-/*can't se it yet*/
-font-size: 149%;
-
+ nav div #username {
+    /*can't se it yet*/
+     font-size: 149%;
 }
-
-nav #logout_button {
-/*cant see it yet*/
-margin-left: 24%;
+ nav #logout_button {
+    /*cant see it yet*/
+     margin-left: 24%;
 }
-
-main #menu {
-/*pizza to drink only*/
-font-size: 150%;
+ main #menu {
+    /*pizza to drink only*/
+     font-size: 150%;
 }
-
-main #menu .pizza {
-color: white;
-padding: 10px;
-padding-bottom: 20px;
-width: 50%;
-margin: 5% 0;
-margin-left: 26%;
-border: 1px solid black;
-border-radius: 10px;
-background-image: url("https://media.istockphoto.com/photos/hot-homemade-pepperoni-pizza-picture-id521403691?k=6&m=521403691&s=612x612&w=0&h=644DsEXT1-dsizk8_0pYiYtq4aluKcRuxd4t2Q0lp3k=")
-/*background-size: auto;*/
+ main #menu .pizza {
+     color: white;
+     padding: 10px;
+     padding-bottom: 20px;
+     width: 50%;
+     margin: 5% 0;
+     margin-left: 26%;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-image: url("https://media.istockphoto.com/photos/hot-homemade-pepperoni-pizza-picture-id521403691?k=6&m=521403691&s=612x612&w=0&h=644DsEXT1-dsizk8_0pYiYtq4aluKcRuxd4t2Q0lp3k=")
+    /*background-size: auto;
+    */
 }
-
-main #menu .pizza .foodNameH3 {
-/*pizza title*/
-text-align: center;
-text-shadow: 2px 2px black;
-font-size: 35px;
+ main #menu .pizza .foodNameH3 {
+    /*pizza title*/
+     text-align: center;
+     text-shadow: 2px 2px black;
+     font-size: 35px;
 }
-
-main #menu .pizza .product {
-/*pizza product*/
-text-shadow: 2px 2px black;
+ main #menu .pizza .product {
+    /*pizza product*/
+     text-shadow: 2px 2px black;
 }
-
-main #menu .pizza .product:hover {
-/*individual pizza name*/
-color: yellow;
-text-shadow: 2px 2px black;
-cursor: pointer;
+ main #menu .pizza .product:hover {
+    /*individual pizza name*/
+     color: yellow;
+     text-shadow: 2px 2px black;
+     cursor: pointer;
 }
-
-main #menu .pizza .product small {
-/*individual pizza price*/
-float: right;
-text-shadow: 2px 2px black;
+ main #menu .pizza .product small {
+    /*individual pizza price*/
+     float: right;
+     text-shadow: 2px 2px black;
 }
-
-main #menu .sandwich {
-color: white;
-padding: 10px;
-padding-bottom: 20px;
-width: 50%;
-margin: 5% 0;
-margin-left: 26%;
-border: 1px solid black;
-border-radius: 10px;
-background-image: url("http://c1.thejournal.ie/media/2014/12/shutterstock-139592222-390x285.jpg")
+ main #menu .sandwich {
+     color: white;
+     padding: 10px;
+     padding-bottom: 20px;
+     width: 50%;
+     margin: 5% 0;
+     margin-left: 26%;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-image: url("http://c1.thejournal.ie/media/2014/12/shutterstock-139592222-390x285.jpg")
 }
-
-main #menu .sandwich .foodNameH3 {
-text-align: center;
-text-shadow: 2px 2px black;
-font-size: 35px;
+ main #menu .sandwich .foodNameH3 {
+     text-align: center;
+     text-shadow: 2px 2px black;
+     font-size: 35px;
 }
-
-main #menu .sandwich .product {
-text-shadow: 2px 2px black;
+ main #menu .sandwich .product {
+     text-shadow: 2px 2px black;
 }
-
-main #menu .sandwich .product:hover {
-color: yellow;
-text-shadow: 2px 2px black;
-cursor: pointer;
+ main #menu .sandwich .product:hover {
+     color: yellow;
+     text-shadow: 2px 2px black;
+     cursor: pointer;
 }
-
-main #menu .sandwich .product small {
-float: right;
+ main #menu .sandwich .product small {
+     float: right;
 }
-
-main #menu .side {
-color: white;
-padding: 10px;
-padding-bottom: 20px;
-width: 50%;
-margin: 5% 0;
-margin-left: 26%;
-border: 1px solid black;
-border-radius: 10px;
-background-image: url("https://images.media-allrecipes.com/images/51520.jpg?width=420&height=237")
-
+ main #menu .side {
+     color: white;
+     padding: 10px;
+     padding-bottom: 20px;
+     width: 50%;
+     margin: 5% 0;
+     margin-left: 26%;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-image: url("https://images.media-allrecipes.com/images/51520.jpg?width=420&height=237")
 }
-
-main #menu .side .foodNameH3 {
-text-align: center;
-text-shadow: 2px 2px black;
-font-size: 35px;
+ main #menu .side .foodNameH3 {
+     text-align: center;
+     text-shadow: 2px 2px black;
+     font-size: 35px;
 }
-
-main #menu .side .product {
-text-shadow: 2px 2px black;
+ main #menu .side .product {
+     text-shadow: 2px 2px black;
 }
-
-main #menu .side .product:hover {
-color: yellow;
-text-shadow: 2px 2px black;
-cursor: pointer;
+ main #menu .side .product:hover {
+     color: yellow;
+     text-shadow: 2px 2px black;
+     cursor: pointer;
 }
-
-main #menu .side .product small {
-float: right;
+ main #menu .side .product small {
+     float: right;
 }
-
-main #menu .dessert {
-color: white;
-padding: 10px;
-padding-bottom: 20px;
-width: 50%;
-margin: 5% 0;
-margin-left: 26%;
-border: 1px solid black;
-border-radius: 10px;
-background-image: url("https://1d2zve3mn4ws4a53nqmjcor1-wpengine.netdna-ssl.com/wp-content/uploads/2014/11/dessert-trio1-868x383.jpg")
+ main #menu .dessert {
+     color: white;
+     padding: 10px;
+     padding-bottom: 20px;
+     width: 50%;
+     margin: 5% 0;
+     margin-left: 26%;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-image: url("https://1d2zve3mn4ws4a53nqmjcor1-wpengine.netdna-ssl.com/wp-content/uploads/2014/11/dessert-trio1-868x383.jpg")
 }
-
-main #menu .dessert .foodNameH3 {
-text-align: center;
-text-shadow: 2px 2px black;
-font-size: 35px;
+ main #menu .dessert .foodNameH3 {
+     text-align: center;
+     text-shadow: 2px 2px black;
+     font-size: 35px;
 }
-
-main #menu .dessert .product {
-text-shadow: 2px 2px black;
+ main #menu .dessert .product {
+     text-shadow: 2px 2px black;
 }
-
-main #menu .dessert .product:hover {
-color: yellow;
-text-shadow: 2px 2px black;
-cursor: pointer;
+ main #menu .dessert .product:hover {
+     color: yellow;
+     text-shadow: 2px 2px black;
+     cursor: pointer;
 }
-
-main #menu .dessert .product small {
-float: right;
+ main #menu .dessert .product small {
+     float: right;
 }
-
-main #menu .drink {
-color: white;
-padding: 10px;
-padding-bottom: 20px;
-width: 50%;
-margin: 5% 0;
-margin-left: 26%;
-border: 1px solid black;
-border-radius: 10px;
-background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Roy_Rogers_Drink.JPG/300px-Roy_Rogers_Drink.JPG")
+ main #menu .drink {
+     color: white;
+     padding: 10px;
+     padding-bottom: 20px;
+     width: 50%;
+     margin: 5% 0;
+     margin-left: 26%;
+     border: 1px solid black;
+     border-radius: 10px;
+     background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Roy_Rogers_Drink.JPG/300px-Roy_Rogers_Drink.JPG")
 }
-
-main #menu .drink .foodNameH3 {
-text-align: center;
-text-shadow: 2px 2px black;
-font-size: 35px;
+ main #menu .drink .foodNameH3 {
+     text-align: center;
+     text-shadow: 2px 2px black;
+     font-size: 35px;
 }
-
-main #menu .drink .product {
-text-shadow: 2px 2px black;
+ main #menu .drink .product {
+     text-shadow: 2px 2px black;
 }
-
-main #menu .drink .product:hover {
-color: yellow;
-text-shadow: 2px 2px black;
-cursor: pointer;
+ main #menu .drink .product:hover {
+     color: yellow;
+     text-shadow: 2px 2px black;
+     cursor: pointer;
 }
-
-main #menu .drink .product small {
-float: right;
+ main #menu .drink .product small {
+     float: right;
 }
-
-.cart-login-register {
-/*cart login register altogether*/
-background-color: violet;
-
+ main #menu_list {
+     text-align: center;
+     font-size: 52px;
+     text-shadow: 2px 2px white;
 }
-
-.cart-login-register #cart {
-/*cart only*/
-  background-color: wheat;
-    /* float: left; */
-    position: fixed;
-    top: 12%;
-    right: 3%;
-    width: 20%;
-    height: auto;
-    padding: auto;
-    padding: 1%;
-    margin: 1%;
-    border: 1px solid black;
-    border-radius: 10px;
-    font-size: 100%;
+ .cart-login-register {
+    /*cart login register altogether*/
+     background-color: violet;
 }
-
-.cart-login-register #cart h3 {
-/*your cart*/
+ .cart-login-register #cart {
+    /*cart only*/
+     background-color: #FF6600;
+    /* float: left;
+     */
+     position: fixed;
+     top: 12%;
+     right: 3%;
+     width: 20%;
+     height: auto;
+     padding: auto;
+     padding: 1%;
+     margin: 1%;
+     border: 1px solid black;
+     border-radius: 10px;
+     font-size: 100%;
 }
-
-.cart-login-register #cart .cart_item {
-/*cart items*/
-text-align: center;
-    padding: 4px 0;
-    color: black;
-    text-shadow: 2px 2px white;
-
+ .cart-login-register #cart h3 {
+    /*your cart*/
 }
-
-.cart-login-register #cart .cart_item:hover {
-/*cart items*/
-  text-shadow: 2px 2px yellow;
-  cursor: pointer;
+ .cart-login-register #cart .cart_item {
+    /*cart items*/
+     text-align: center;
+     padding: 4px 0;
+     color: #533419;
+     text-shadow: 1px 1px white;
 }
-
-.cart-login-register #cart .cart_item .three {
-/*quantity of cart items*/
-float: left;
+ .cart-login-register #cart .cart_item:hover {
+    /*cart items*/
+     text-shadow: 1px 1px yellow;
+     cursor: pointer;
 }
-
-.cart-login-register #cart .cart_item span {
-/*name of item in cart*/
+ .cart-login-register #cart .cart_item .three {
+    /*quantity of cart items*/
+     float: left;
 }
-
-.cart-login-register #cart .cart_item .price_sum {
-/*price of cart item*/
-float: right;
+ .cart-login-register #cart .cart_item span {
+    /*name of item in cart*/
 }
-
-.cart-login-register #cart .total {
-/*total of cart item*/
-float: right;
-    padding: 4px 0;
-    color: balck;
-    text-shadow: 2px 2px white;
-    font-size: 120%;
+ .cart-login-register #cart .cart_item .price_sum {
+    /*price of cart item*/
+     float: right;
 }
-
-.cart-login-register #cart #order {
-/*place order*/
-  margin: 10% 0% 3% 33%;
+ .cart-login-register #cart .total {
+    /*total of cart item*/
+     float: right;
+     padding: 4px 0;
+     color: balck;
+     text-shadow: 2px 2px white;
+     font-size: 120%;
 }
-
-.cart-login-register #cart #order:hover {
-/*place order*/
-  font-size: 120%;
-  cursor: pointer;
+ .cart-login-register #cart #order {
+    /*place order*/
+     margin: 10% 0% 3% 33%;
 }
-
-.cart-login-register #login {
-/*username password login doesnt have an account*/
-    background-color: silver;
-    text-align: center;
-    position: fixed;
-    top: 15%;
-    right: 28%;
-    height: 29%;
-    padding: 2%;
-    border-radius: 10px;
+ .cart-login-register #cart #order:hover {
+    /*place order*/
+     font-size: 120%;
+     cursor: pointer;
 }
-
-.cart-login-register #login form {
-/*username password login*/
-font-size: 94%;
+ .cart-login-register #login {
+    /*username password login doesnt have an account*/
+     background-color: silver;
+     text-align: center;
+     position: fixed;
+     top: 15%;
+     right: 28%;
+     height: 29%;
+     padding: 2%;
+     border-radius: 10px;
 }
-
-.cart-login-register #login form span {
-/*username and password name*/
-font-size: 124%;
+ .cart-login-register #login form {
+    /*username password login*/
+     font-size: 94%;
 }
-
-.cart-login-register #login form input {
-/*username password input and login button*/
-margin-right: 2%;
+ .cart-login-register #login form span {
+    /*username and password name*/
+     font-size: 124%;
 }
-
-.cart-login-register #login form .btn-primary {
-/*login button only*/
-margin: 4%;
+ .cart-login-register #login form input {
+    /*username password input and login button*/
+     margin-right: 2%;
 }
-
+ .cart-login-register #login form .btn-primary {
+    /*login button only*/
+     margin: 4%;
+}
 /*Title Page*/
-
-div.titlepage h1 {
-  text-align:center;
-  font-size: 7.5em;
-  margin-top:10%;
+ div.titlepage h1 {
+     text-align:center;
+     font-size: 7.5em;
+     margin-top:10%;
+}
+ div.titlepage h2 {
+     text-align: center;
+     font-size: 3em;
+     margin-top: 5%;
+}
+ .titlepage form {
+     text-align: center;
+     margin-top: 5%;
+}
+ .titlepage form input {
+     font-size: 2.5em;
+     border-radius: 10px;
+     border: solid 2px;
+     width: 15%;
+     background-color: #ecffeb;
+}
+ .titlepage form input:hover {
+     background-color: black;
+     color: #ecffeb;
+}
+ .cart-login-register #login #new:hover {
+    /*doesnt have an account*/
+     cursor: pointer;
+     font-size: 110%;
+}
+ .cart-login-register #register {
+    /*username password phone number register*/
+     background-color: #A45209;
+     text-align: center;
+     position: fixed;
+     top: 15%;
+     right: 28%;
+     height: 38%;
+     width: 45%;
+     padding: 2%;
+     border-radius: 10px;
+}
+ .cart-login-register #register .login-form {
+    /*username password phone number register*/
+}
+ .cart-login-register #register .login-form span {
+    /*username password phonenumber name*/
+     font-size: 124%;
+     padding-right: 2%;
+}
+ .cart-login-register #register .login-form input {
+    /*username password phonenumber register button*/
+     margin-bottom: 4%;
+    /* margin-left: 0%;
+     */
+     padding-right: -1%;
+     margin-right: 1%;
+     width: 68%;
+}
+ .cart-login-register #register .login-form .input_register {
+    /*register button only*/
+     width: 187px;
+}
+ .cart-login-register #specify_quantity {
+    /*add to cart column*/
+     background-color: pink;
+     text-align: center;
+     position: fixed;
+     top: 43%;
+     right: 38%;
+     height: 17%;
+     width: 21%;
+     padding: 1%;
+     margin: 1%;
+     border-radius: 10px;
+}
+ .cart-login-register #specify_quantity .center {
+    /*add to cart column*/
+}
+ .cart-login-register #specify_quantity .center .name {
+    /*not yet seen*/
+     font-size: 200%;
+}
+ .cart-login-register #specify_quantity .center .qty {
+    /*not yet seen*/
+     position: fixed;
+     bottom: 43.5%;
+     right: 57.5%;
+     font-size: 150%;
+}
+ .cart-login-register #specify_quantity .center .plus {
+    /*add button*/
+     position: fixed;
+     bottom: 44%;
+     right: 55%;
+     font-size: 104%;
+}
+ .cart-login-register #specify_quantity .center .minus {
+    /*minus button*/
+     position: fixed;
+     bottom: 44%;
+     right: 53%;
+}
+ .cart-login-register #specify_quantity .center .add {
+    /*add to cart button*/
+     position: fixed;
+     bottom: 44%;
+     right: 46%;
+}
+ .cart-login-register #specify_quantity .center .cancel {
+    /*cancel button*/
+     position: fixed;
+     bottom: 44%;
+     right: 41%;
+}
+ .orderDisplay {
+     font-size: 1.4em;
+     text-align: center;
+     border: 1px solid black;
+     margin: 1%;
+     border-radius: 10px;
+     background-color: white;
+}
+ .orderDisplay p span {
+     margin: 2%;
+}
+ .orderDisplay strong {
+     margin: 1%;
 }
 
-div.titlepage h2 {
-  text-align: center;
-  font-size: 3em;
-  margin-top: 5%;
-}
-
-.titlepage form {
-  text-align: center;
-  margin-top: 5%;
-}
-
-.titlepage form input {
-    font-size: 2.5em;
-    border-radius: 10px;
-    border: solid 2px;
-    width: 15%;
-    background-color: #ecffeb;
-}
-
-.titlepage form input:hover {
-   background-color: black;
-   color: #ecffeb;
-}
-
-.cart-login-register #login #new:hover {
-/*doesnt have an account*/
-cursor: pointer;
-font-size: 110%;
-}
-
-.cart-login-register #register {
-/*username password phone number register*/
-    background-color: #A45209;
-    text-align: center;
-    position: fixed;
-    top: 15%;
-    right: 28%;
-    height: 38%;
-    width: 45%;
-    padding: 2%;
-    border-radius: 10px;
-}
-
-.cart-login-register #register .login-form {
-/*username password phone number register*/
-
-}
-
-.cart-login-register #register .login-form span {
-/*username password phonenumber name*/
-font-size: 124%;
-    padding-right: 2%;
-}
-
-.cart-login-register #register .login-form input {
-/*username password phonenumber register button*/
-margin-bottom: 4%;
-    /* margin-left: 0%; */
-    padding-right: -1%;
-    margin-right: 1%;
-    width: 68%;
-}
-
-.cart-login-register #register .login-form .input_register {
-/*register button only*/
-width: 187px;
-}
-
-.cart-login-register #specify_quantity {
-/*add to cart column*/
-    background-color: pink;
-    text-align: center;
-    position: fixed;
-    top: 43%;
-    right: 38%;
-    height: 17%;
-    width: 21%;
-    padding: 1%;
-    margin: 1%;
-}
-
-.cart-login-register #specify_quantity .center {
-/*add to cart column*/
-}
-
-.cart-login-register #specify_quantity .center .name {
-/*not yet seen*/
-font-size: 200%;
-}
-
-.cart-login-register #specify_quantity .center .qty {
-/*not yet seen*/
-position: fixed;
-    bottom: 43.5%;
-    right: 57.5%;
-    font-size: 150%;
-}
-
-.cart-login-register #specify_quantity .center .plus {
-/*add button*/
-position: fixed;
-    bottom: 44%;
-    right: 55%;
-    font-size: 104%;
-}
-
-.cart-login-register #specify_quantity .center .minus {
-/*minus button*/
-position: fixed;
-    bottom: 44%;
-    right: 53%;
-}
-
-.cart-login-register #specify_quantity .center .add {
-/*add to cart button*/
-position: fixed;
-    bottom: 44%;
-    right: 46%;
-}
-
-.cart-login-register #specify_quantity .center .cancel {
-/*cancel button*/
-    position: fixed;
-    bottom: 44%;
-    right: 41%;
-  }
-
-.orderDisplay {
-    font-size: 1.4em;
-    text-align: center;
-}
-
-.orderDisplay p span {
-    margin: 2%;
-}
-
-.orderDisplay strong {
-    margin: 1%;
-}

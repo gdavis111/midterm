@@ -88,7 +88,7 @@ const renderOrders = () => {
 
     let $order = $(`
       <section class="orderDisplay">
-        <h3>order #${order.id}</h3>
+        <h3>Order #${order.id}</h3>
       </section>
     `);
     for(let item of order.items) {
