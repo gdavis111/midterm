@@ -20,12 +20,7 @@ module.exports = (DataAccess) => {
     const username       = req.body.username;
     const phone_number   = req.body.phone_number;
 
-    // console.log(username, phone_number);
-
     if(validUsername(username) && validPhoneNumber(phone_number)) {
-
-      // console.log('valid');
-
       DataAccess.addUserPromise(username, bcrypt.hashSync(req.body.password, 10), phone_number)
 
       .then((username_and_id) => {
@@ -34,13 +29,12 @@ module.exports = (DataAccess) => {
       })
 
       .catch((message) => {
-        console.log('this is THE ONE!!!');
         res.status(400).send(message);
       });
 
     }
     else {
-      res.status(400).send();
+      res.status(400).send('invalid user details');
     }
   });
 
@@ -64,7 +58,7 @@ module.exports = (DataAccess) => {
           });
         }
         else {
-          res.status(401).send();
+          res.status(401).send('username or password incorrect');
         }
       })
       .catch((message) => {
@@ -72,7 +66,7 @@ module.exports = (DataAccess) => {
       });
     }
     else {
-      res.send(400).send('username invalid');
+      res.status(400).send('username invalid');
     }
   });
 

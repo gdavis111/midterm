@@ -1,3 +1,5 @@
+//TODO make sure message to customer is working
+
 /*jslint node: true */
 "use strict";
 
