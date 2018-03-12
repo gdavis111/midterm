@@ -1,5 +1,3 @@
-// TODO registration form disappears on click
-// TODO orders button is dodgy
 
 // *----------------------------*
 // | DISPLAYING SERVERSIDE DATA |
@@ -80,9 +78,11 @@ const renderCart = (cart) => {
   }
 };
 
-const renderOrders = () => {
+function renderOrders() {
   const $orders   = $('#orders');
   const orders    = $orders.data('orders');
+
+  $orders.empty();
 
   for(let order of orders) {
 
@@ -100,7 +100,7 @@ const renderOrders = () => {
     $order.append(`<p>${order.status}</p>`);
     $orders.append($order);
   }
-};
+}
 
 // *-------------------------*
 // | CLICK AND FORM HANDLERS |
@@ -126,9 +126,6 @@ function placeOrderHandler(event) {
       if(user_logged_in) {
         placeOrder();
       }
-    })
-    .catch((message) => {
-      alert(message);
     });
   }
   else {
@@ -223,20 +220,15 @@ function logoutButtonHandler() {
 }
 
 function loginHandler(event, callback=null) {
-  //event.stopImmediatePropagation();
   displayLoginFormAsync()
     .then((user_logged_in) => {
       if(user_logged_in && callback) {
         callback();
       }
-    })
-    .catch((message) => {
-      // TODO you can do better than alert...
-      alert(message);
     });
 }
 
-function formSubmissionHandler(event, route, exit, resolve, reject) {
+function formSubmissionHandler(event, route, exit, resolve) {
 
   event.preventDefault();
   $.ajax({
@@ -253,9 +245,12 @@ function formSubmissionHandler(event, route, exit, resolve, reject) {
     reflectLoginStatus();
     resolve(true);
   })
-  .fail((message) => {
-    exit();
-    reject(message);
+  .fail((err) => {
+    $.each($('.error_message'), function(key, elem) {
+      if($(elem).closest('article').css('display') !== 'none') {
+        $(elem).html(err.responseText);
+      }
+    });
   });
 }
 
@@ -302,7 +297,7 @@ function displayRegistrationFormAsync() {
     };
 
     $form.on('submit', function(event) {
-      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
+      formSubmissionHandler.bind(this)(event, route, exit, resolve);
     });
 
     window.addEventListener('click', clickAwayRegister, true);
@@ -310,8 +305,6 @@ function displayRegistrationFormAsync() {
 
   });
 }
-
-
 
 function displayLoginFormAsync() {
   return new Promise(function(resolve, reject) {
@@ -334,7 +327,7 @@ function displayLoginFormAsync() {
     });
 
     $form.on('submit', function(event) {
-      formSubmissionHandler.bind(this)(event, route, exit, resolve, reject);
+      formSubmissionHandler.bind(this)(event, route, exit, resolve);
     });
 
     window.addEventListener('click', clickAwayLogin, true);
@@ -397,5 +390,6 @@ function goHome() {
 function goToOrders() {
   reflectLoginStatus();
   renderOrders();
+  setInterval(function() { window.location.replace('/orders'); }, 60000);
 }
 

@@ -1,3 +1,5 @@
+//TODO make sure message to customer is working
+
 /*jslint node: true */
 "use strict";
 
@@ -83,6 +85,7 @@ module.exports = (DataAccess) => {
   function applyChefsResponse([id, minutes]) {
     DataAccess.updateOrderStatusPromise(id, minutes)
     .then((customer_phone_number) => {
+      console.log(customer_phone_number);
       sendStatusToCustomer(minutes, customer_phone_number);
     })
     .catch(() => {
